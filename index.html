@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>미래경영자 코칭 포털 | 삼성전자 상생협력 아카데미</title>
   <meta name="description" content="미래경영자(경영자 후보, 가업승계 2세)의 자기 성찰과 리더십 자립을 지원하는 3회차 맞춤형 코칭 프로그램 포털">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 
@@ -32,9 +32,14 @@
 
     <div class="header-actions">
       <span class="caption-text num" id="lastSavedStamp" aria-live="polite">저장 기록 없음</span>
+      <div class="cohort-picker">
+        <label class="cohort-picker-label" for="cohortSelect">기수</label>
+        <select class="cohort-select" id="cohortSelect"></select>
+      </div>
       <div class="segment" role="group" aria-label="열람 모드 전환">
         <button type="button" class="segment-btn role-btn is-active" data-role="coachee" aria-pressed="true">피코치</button>
         <button type="button" class="segment-btn role-btn" data-role="coach" aria-pressed="false">코치</button>
+        <button type="button" class="segment-btn role-btn" data-role="admin" aria-pressed="false">관리자</button>
       </div>
       <button type="button" class="icon-btn" id="densityToggleBtn" aria-label="밀도 전환 (Comfortable/Compact)">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/></svg>
@@ -106,6 +111,12 @@
         <span class="nav-text">코칭 툴 나눔터</span>
       </button>
 
+      <div class="nav-group-label admin-only">관리자</div>
+      <button type="button" class="nav-link admin-only" data-tab="admin">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 4v6c0 4.4-3 8.4-7 10-4-1.6-7-5.6-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span class="nav-text">기수 관리</span>
+      </button>
+
       <div class="nav-group-label">자료</div>
       <button type="button" class="nav-link" data-tab="toolkit">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -122,7 +133,7 @@
       <!-- Hero: 프로그램 인트로 -->
       <section class="overview-hero" aria-labelledby="overviewHeroTitle">
         <span class="hero-eyebrow"><span class="hero-dot" aria-hidden="true"></span>Program Overview</span>
-        <h2 class="hero-title" id="overviewHeroTitle">4기 미래경영자 심화과정<br>맞춤형 1:1 코칭 여정</h2>
+        <h2 class="hero-title" id="overviewHeroTitle"><span data-cohort-label>4기</span> 미래경영자 심화과정<br>맞춤형 1:1 코칭 여정</h2>
         <p class="hero-lede">
           미래경영자 심화과정 코칭은 <strong>경영자 후보 및 가업승계 2세</strong>가 자신의 고유한 강점과 보완점을 객관적으로 인식하고,<br>
           선대 경영자의 그늘에서 벗어나 <strong>&lsquo;나다운 경영자&rsquo;</strong>로서의 정체성과 실질적인 조직 변화관리 능력을 확립하도록 돕는
@@ -1234,6 +1245,71 @@
       </div>
     </section>
 
+
+    <!-- --------------------------------------------------------------------
+         Section: 기수 관리 (Admin)
+         -------------------------------------------------------------------- -->
+    <section class="page-section" id="section-admin">
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text text-action">ADMINISTRATION</span>
+            <h2 class="card-title">기수 관리</h2>
+            <p class="card-subtitle">기수를 추가하면 해당 기수의 워크시트 · 합의서 · 코칭일지가 서로 섞이지 않도록 별도로 저장됩니다.</p>
+          </div>
+          <span class="badge badge-brand" id="adminCurrentCohort">현재 기수 —</span>
+        </div>
+
+        <form class="admin-add-form" id="cohortAddForm">
+          <div class="form-group">
+            <label class="form-label" for="newCohortLabel">새 기수 이름</label>
+            <input type="text" class="input-text" id="newCohortLabel" placeholder="예: 5기" maxlength="20" autocomplete="off" required>
+            <span class="form-hint">추가한 기수는 우측 상단 기수 선택에 바로 나타납니다.</span>
+          </div>
+          <button type="submit" class="btn btn-primary">기수 추가</button>
+        </form>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <caption class="sr-only">등록된 기수 목록</caption>
+            <thead>
+              <tr>
+                <th scope="col">기수</th>
+                <th scope="col">저장된 항목</th>
+                <th scope="col">상태</th>
+                <th scope="col" class="col-actions">관리</th>
+              </tr>
+            </thead>
+            <tbody id="cohortTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text">DATA SCOPE</span>
+            <h3 class="card-title">기수별로 분리되는 데이터</h3>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="info-block">
+            <h4 class="heading-3">코칭 합의서</h4>
+            <p class="body-text">고객·코치 정보, 코칭 목표 3종, 서명 상태</p>
+          </div>
+          <div class="info-block">
+            <h4 class="heading-3">커리어 코칭 워크시트</h4>
+            <p class="body-text">인생 그래프, 핵심 가치, 리더십 수레바퀴, 만다라트</p>
+          </div>
+          <div class="info-block">
+            <h4 class="heading-3">라이프 코칭 &amp; 일지</h4>
+            <p class="body-text">1~3회차 라이프 워크시트, 코치 전용 코칭 일지</p>
+          </div>
+        </div>
+        <p class="form-hint">테마 · 밀도 · 역할 · 기수 선택 같은 화면 설정은 기수와 무관하게 공통으로 유지됩니다.</p>
+      </div>
+    </section>
+
   </main>
   </div>
 
@@ -1247,6 +1323,6 @@
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- Client Application Script -->
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>

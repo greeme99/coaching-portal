@@ -1979,3 +1979,162 @@ button, input, select, textarea {
   .grid-3,
   .grid-4 { grid-template-columns: minmax(0, 1fr); }
 }
+
+
+/* ==========================================================================
+   13. 기수(Cohort) 선택 & 관리자 페이지
+   ========================================================================== */
+
+/* --- 헤더 기수 선택 ------------------------------------------------------- */
+.cohort-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px 2px 2px var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.cohort-picker-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.cohort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 13px center, right 8px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: 12px;
+  font-weight: 700;
+  height: 28px;
+  padding: 0 var(--space-6) 0 var(--space-3);
+  cursor: pointer;
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+
+.cohort-select:hover {
+  border-color: var(--color-action);
+  color: var(--color-action);
+}
+
+/* --- 관리자: 기수 추가 폼 -------------------------------------------------- */
+.admin-add-form {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.admin-add-form .form-group {
+  flex: 1 1 280px;
+  max-width: 420px;
+}
+
+/* --- 관리자: 기수 목록 테이블 ---------------------------------------------- */
+.admin-table-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.admin-table thead th {
+  background-color: var(--color-bg-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.admin-table tbody th {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.admin-table tbody tr:last-child th,
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr.is-current {
+  background-color: var(--color-bg-selected);
+}
+
+.admin-table .col-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.admin-table .col-actions .btn + .btn {
+  margin-left: var(--space-1);
+}
+
+.admin-table .btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  color: var(--color-status-danger);
+}
+
+.btn-danger:hover:not([disabled]) {
+  background-color: var(--color-status-danger-bg);
+  color: var(--color-status-danger);
+}
+
+/* --- 스크린리더 전용 ------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1100px) {
+  .cohort-picker-label { display: none; }
+  .cohort-picker { padding-left: 2px; }
+}
+
+@media (max-width: 860px) {
+  .admin-table .col-actions { text-align: left; white-space: normal; }
+}
+
+@media print {
+  .cohort-picker { display: none !important; }
+}

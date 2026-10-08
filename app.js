@@ -19,8 +19,30 @@
     MANDALART: 'mk_coaching_mandalart',
     LIFECOACH_WS1: 'mk_lifecoach_ws1',
     LIFECOACH_WS2: 'mk_lifecoach_ws2',
-    LIFECOACH_WS3: 'mk_lifecoach_ws3'
+    LIFECOACH_WS3: 'mk_lifecoach_ws3',
+    COHORTS: 'mk_coaching_cohorts',
+    MIGRATED: 'mk_coaching_cohort_migrated'
   };
+
+  // 기수별로 분리 저장되는 키 — 나머지(STATE/COHORTS)는 기수와 무관한 공통 설정
+  const SCOPED_KEYS = [
+    STORAGE_KEYS.AGREEMENT,
+    STORAGE_KEYS.LOGS,
+    STORAGE_KEYS.LIFELINE,
+    STORAGE_KEYS.VALUES,
+    STORAGE_KEYS.LEADERSHIP,
+    STORAGE_KEYS.MANDALART,
+    STORAGE_KEYS.LIFECOACH_WS1,
+    STORAGE_KEYS.LIFECOACH_WS2,
+    STORAGE_KEYS.LIFECOACH_WS3
+  ];
+
+  const DEFAULT_COHORTS = [
+    { id: 'c1', label: '1기' },
+    { id: 'c2', label: '2기' },
+    { id: 'c3', label: '3기' },
+    { id: 'c4', label: '4기' }
+  ];
 
   // 공식 구글폼 (삼성전자 상생협력 아카데미 미경자 코칭일지)
   const GOOGLE_FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSedf_CYG8CDnr42WDstAE2MdpdN3ReucNn4HbnKSy606QRVCg/viewform';
@@ -28,7 +50,8 @@
   const DEFAULT_STATE = {
     theme: 'gray-skyblue',
     density: 'comfortable',
-    roleMode: 'coachee', // 'coachee' | 'coach'
+    roleMode: 'coachee', // 'coachee' | 'coach' | 'admin'
+    cohortId: null,      // null 이면 최신 기수를 사용
     currentTab: 'overview',
     viewModes: {
       session1: 'quick',
@@ -40,17 +63,42 @@
     }
   };
 
-  const savedState = loadJson(STORAGE_KEYS.STATE);
+  // 기수 목록과 현재 기수는 appState 보다 먼저 확정해야 한다 (저장 키가 기수에 의존)
+  let cohorts = readRaw(STORAGE_KEYS.COHORTS);
+  if (!Array.isArray(cohorts) || !cohorts.length) {
+    cohorts = DEFAULT_COHORTS.slice();
+    writeRaw(STORAGE_KEYS.COHORTS, cohorts);
+  }
+
+  function latestCohortId() {
+    return cohorts[cohorts.length - 1].id;
+  }
+
+  function findCohort(id) {
+    return cohorts.find(c => c.id === id) || null;
+  }
+
+  const savedState = readRaw(STORAGE_KEYS.STATE);
   let appState = Object.assign({}, DEFAULT_STATE, savedState);
   if (!savedState || savedState.theme === 'light') {
     appState.theme = 'gray-skyblue';
-    saveJson(STORAGE_KEYS.STATE, appState);
   }
+  // 저장된 기수가 없거나 삭제되었으면 최신 기수로 되돌린다
+  if (!findCohort(appState.cohortId)) {
+    appState.cohortId = latestCohortId();
+  }
+  if (!['coachee', 'coach', 'admin'].includes(appState.roleMode)) {
+    appState.roleMode = 'coachee';
+  }
+  saveJson(STORAGE_KEYS.STATE, appState);
+
+  migrateLegacyCohortData();
 
   // --------------------------------------------------------------------------
   // 2. Utility Helpers
   // --------------------------------------------------------------------------
-  function loadJson(key) {
+  // 기수 스코프를 적용하지 않는 원본 접근 (기수 목록 / 앱 설정 / 마이그레이션용)
+  function readRaw(key) {
     try {
       const data = localStorage.getItem(key);
       return data ? JSON.parse(data) : null;
@@ -60,12 +108,66 @@
     }
   }
 
-  function saveJson(key, data) {
+  function writeRaw(key, data) {
     try {
       localStorage.setItem(key, JSON.stringify(data));
     } catch (e) {
       console.warn('LocalStorage save error:', e);
     }
+  }
+
+  // 워크시트/합의서/일지 키는 현재 기수 네임스페이스를 붙인다
+  function scopedKey(key, cohortId) {
+    if (!SCOPED_KEYS.includes(key)) return key;
+    return key + '__' + (cohortId || appState.cohortId);
+  }
+
+  function loadJson(key) {
+    return readRaw(scopedKey(key));
+  }
+
+  function saveJson(key, data) {
+    writeRaw(scopedKey(key), data);
+  }
+
+  // 기수 도입 이전에 저장된 데이터를 기본(최신) 기수 소유로 1회 이관한다
+  function migrateLegacyCohortData() {
+    if (readRaw(STORAGE_KEYS.MIGRATED)) return;
+    const target = appState.cohortId;
+    let moved = 0;
+    SCOPED_KEYS.forEach(key => {
+      const legacy = localStorage.getItem(key);
+      if (legacy === null) return;
+      const dest = scopedKey(key, target);
+      if (localStorage.getItem(dest) !== null) return; // 이미 있으면 덮지 않는다
+      try {
+        localStorage.setItem(dest, legacy);
+        if (localStorage.getItem(dest) === legacy) {
+          localStorage.removeItem(key);
+          moved += 1;
+        }
+      } catch (e) {
+        console.warn('Cohort migration error:', key, e);
+      }
+    });
+    writeRaw(STORAGE_KEYS.MIGRATED, { at: new Date().toISOString(), cohortId: target, moved: moved });
+  }
+
+  // 새로고침 후에도 안내 문구를 이어서 보여주기 위한 대기 토스트
+  function queueToast(message) {
+    try {
+      sessionStorage.setItem('mk_coaching_pending_toast', message);
+    } catch (e) { /* 세션 저장 실패는 무시 */ }
+  }
+
+  function flushQueuedToast() {
+    try {
+      const msg = sessionStorage.getItem('mk_coaching_pending_toast');
+      if (msg) {
+        sessionStorage.removeItem('mk_coaching_pending_toast');
+        showToast(msg);
+      }
+    } catch (e) { /* 무시 */ }
   }
 
   function showToast(message) {
@@ -132,7 +234,19 @@
     saveJson(STORAGE_KEYS.STATE, appState);
   }
 
-  function applyRoleMode(role) {
+  const ROLE_LABELS = {
+    coachee: '피코치 모드',
+    coach: '코치 전용 모드',
+    admin: '관리자 모드'
+  };
+
+  const ROLE_TOASTS = {
+    coachee: '피코치 학습 가이드 모드로 전환되었습니다',
+    coach: '코치 전용 모드로 전환되었습니다 (일지 작성 활성화)',
+    admin: '관리자 모드로 전환되었습니다 (기수 관리 활성화)'
+  };
+
+  function applyRoleMode(role, notify) {
     appState.roleMode = role;
     document.querySelectorAll('.role-btn').forEach(btn => {
       const on = btn.dataset.role === role;
@@ -142,18 +256,26 @@
       btn.setAttribute('aria-pressed', String(on));
     });
 
-    // Toggle coach exclusive elements
+    // 관리자는 코치 도구까지 볼 수 있고, 관리자 메뉴는 관리자에게만 보인다
+    const seesCoachTools = role === 'coach' || role === 'admin';
     document.querySelectorAll('.coach-only').forEach(el => {
-      el.style.display = role === 'coach' ? '' : 'none';
+      el.style.display = seesCoachTools ? '' : 'none';
+    });
+    document.querySelectorAll('.admin-only').forEach(el => {
+      el.style.display = role === 'admin' ? '' : 'none';
     });
 
     const roleIndicator = document.getElementById('currentRoleLabel');
     if (roleIndicator) {
-      roleIndicator.textContent = role === 'coach' ? '코치 전용 모드' : '피코치 모드';
+      roleIndicator.textContent = ROLE_LABELS[role] || ROLE_LABELS.coachee;
     }
 
+    // 숨겨진 메뉴에 머물러 있으면 개요로 돌려보낸다
+    const current = document.querySelector(`.nav-link[data-tab="${appState.currentTab}"]`);
+    if (current && current.style.display === 'none') showTab('overview');
+
     saveJson(STORAGE_KEYS.STATE, appState);
-    showToast(role === 'coach' ? '코치 전용 모드로 전환되었습니다 (일지 작성 활성화)' : '피코치 학습 가이드 모드로 전환되었습니다');
+    if (notify !== false) showToast(ROLE_TOASTS[role] || ROLE_TOASTS.coachee);
   }
 
   function showTab(tabId) {
@@ -312,6 +434,156 @@
       badge.textContent = `전체 ${overall}%`;
       badge.className = 'badge num ' + (overall >= 100 ? 'badge-success' : overall > 0 ? 'badge-brand' : 'badge-neutral');
     }
+  }
+
+  // --------------------------------------------------------------------------
+  // 3-4. 기수(Cohort) 선택 & 관리
+  // --------------------------------------------------------------------------
+  function currentCohortLabel() {
+    const c = findCohort(appState.cohortId);
+    return c ? c.label : '—';
+  }
+
+  function cohortItemCount(cohortId) {
+    return SCOPED_KEYS.filter(k => localStorage.getItem(scopedKey(k, cohortId)) !== null).length;
+  }
+
+  function renderCohortPicker() {
+    const sel = document.getElementById('cohortSelect');
+    if (sel) {
+      sel.innerHTML = cohorts
+        .map(c => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.label)}</option>`)
+        .join('');
+      sel.value = appState.cohortId;
+    }
+    document.querySelectorAll('[data-cohort-label]').forEach(el => {
+      el.textContent = currentCohortLabel();
+    });
+    const badge = document.getElementById('adminCurrentCohort');
+    if (badge) badge.textContent = `현재 기수 ${currentCohortLabel()}`;
+  }
+
+  function switchCohort(cohortId) {
+    if (!findCohort(cohortId) || cohortId === appState.cohortId) {
+      renderCohortPicker();
+      return;
+    }
+    appState.cohortId = cohortId;
+    saveJson(STORAGE_KEYS.STATE, appState);
+    // 워크시트 모듈들이 로드 시점의 기수 데이터를 들고 있으므로 전체를 다시 초기화한다
+    queueToast(`${currentCohortLabel()} 데이터로 전환되었습니다`);
+    location.reload();
+  }
+
+  function saveCohorts() {
+    writeRaw(STORAGE_KEYS.COHORTS, cohorts);
+    renderCohortPicker();
+    renderCohortTable();
+  }
+
+  function addCohort(label) {
+    const name = String(label || '').trim();
+    if (!name) {
+      showToast('기수 이름을 입력해 주세요.');
+      return false;
+    }
+    if (cohorts.some(c => c.label === name)) {
+      showToast(`'${name}' 기수가 이미 있습니다.`);
+      return false;
+    }
+    const used = new Set(cohorts.map(c => c.id));
+    let n = cohorts.length + 1;
+    while (used.has('c' + n)) n += 1;
+    cohorts.push({ id: 'c' + n, label: name });
+    saveCohorts();
+    showToast(`'${name}' 기수가 추가되었습니다.`);
+    return true;
+  }
+
+  function renameCohort(cohortId) {
+    const c = findCohort(cohortId);
+    if (!c) return;
+    const next = window.prompt('기수 이름을 입력하세요.', c.label);
+    if (next === null) return;
+    const name = next.trim();
+    if (!name) {
+      showToast('기수 이름은 비워 둘 수 없습니다.');
+      return;
+    }
+    if (cohorts.some(o => o !== c && o.label === name)) {
+      showToast(`'${name}' 기수가 이미 있습니다.`);
+      return;
+    }
+    c.label = name;
+    saveCohorts();
+    showToast('기수 이름이 변경되었습니다.');
+  }
+
+  function deleteCohort(cohortId) {
+    const c = findCohort(cohortId);
+    if (!c) return;
+    if (cohorts.length <= 1) {
+      showToast('마지막 남은 기수는 삭제할 수 없습니다.');
+      return;
+    }
+    if (cohortId === appState.cohortId) {
+      showToast('현재 선택된 기수는 삭제할 수 없습니다. 다른 기수로 전환한 뒤 삭제해 주세요.');
+      return;
+    }
+    const count = cohortItemCount(cohortId);
+    const warn = count > 0
+      ? `'${c.label}'에 저장된 ${count}개 항목(합의서·워크시트·일지)이 함께 삭제되며 되돌릴 수 없습니다.`
+      : `'${c.label}'에는 저장된 데이터가 없습니다.`;
+    if (!window.confirm(`${warn}\n\n정말 삭제할까요?`)) return;
+
+    SCOPED_KEYS.forEach(k => localStorage.removeItem(scopedKey(k, cohortId)));
+    cohorts = cohorts.filter(o => o.id !== cohortId);
+    saveCohorts();
+    showToast(`'${c.label}' 기수를 삭제했습니다.`);
+  }
+
+  function renderCohortTable() {
+    const body = document.getElementById('cohortTableBody');
+    if (!body) return;
+    body.innerHTML = cohorts.map(c => {
+      const isCurrent = c.id === appState.cohortId;
+      const count = cohortItemCount(c.id);
+      return `<tr${isCurrent ? ' class="is-current"' : ''}>
+        <th scope="row">${escapeHtml(c.label)}</th>
+        <td class="num">${count}개</td>
+        <td>${isCurrent ? '<span class="badge badge-success">선택됨</span>' : '<span class="badge badge-neutral">대기</span>'}</td>
+        <td class="col-actions">
+          <button type="button" class="btn btn-ghost btn-sm" data-cohort-action="select" data-cohort-id="${escapeHtml(c.id)}"${isCurrent ? ' disabled' : ''}>선택</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-cohort-action="rename" data-cohort-id="${escapeHtml(c.id)}">이름 변경</button>
+          <button type="button" class="btn btn-ghost btn-sm btn-danger" data-cohort-action="delete" data-cohort-id="${escapeHtml(c.id)}"${isCurrent || cohorts.length <= 1 ? ' disabled' : ''}>삭제</button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  function initCohortUI() {
+    renderCohortPicker();
+    renderCohortTable();
+
+    document.getElementById('cohortSelect')?.addEventListener('change', e => {
+      switchCohort(e.target.value);
+    });
+
+    document.getElementById('cohortAddForm')?.addEventListener('submit', e => {
+      e.preventDefault();
+      const input = document.getElementById('newCohortLabel');
+      if (addCohort(input.value)) input.value = '';
+      input.focus();
+    });
+
+    document.getElementById('cohortTableBody')?.addEventListener('click', e => {
+      const btn = e.target.closest('[data-cohort-action]');
+      if (!btn) return;
+      const id = btn.dataset.cohortId;
+      if (btn.dataset.cohortAction === 'select') switchCohort(id);
+      else if (btn.dataset.cohortAction === 'rename') renameCohort(id);
+      else if (btn.dataset.cohortAction === 'delete') deleteCohort(id);
+    });
   }
 
   function resumeWork() {
@@ -818,8 +1090,10 @@ ${d.coachReview || '(내용 없음)'}`;
     // Apply Settings
     applyTheme(appState.theme);
     applyDensity(appState.density);
-    applyRoleMode(appState.roleMode);
+    applyRoleMode(appState.roleMode, false);
+    initCohortUI();
     showTab(appState.currentTab);
+    flushQueuedToast();
 
     // Event Listeners for Shell
     document.getElementById('themeToggleBtn')?.addEventListener('click', () => {
@@ -980,6 +1254,7 @@ ${d.coachReview || '(내용 없음)'}`;
     initToolkitAccordion();
     initLifeWorksheets();
     renderProgress();
+    renderCohortTable();
 
     const activeSection = document.getElementById(`section-${appState.currentTab}`);
     if (activeSection) setupReveal(activeSection);
