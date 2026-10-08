@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="light" data-density="comfortable">
+<html lang="ko" data-theme="gray-skyblue" data-density="comfortable">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>미래경영자 코칭 포털 | 삼성전자 상생협력 아카데미</title>
   <meta name="description" content="미래경영자(경영자 후보, 가업승계 2세)의 자기 성찰과 리더십 자립을 지원하는 3회차 맞춤형 코칭 프로그램 포털">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -60,24 +60,50 @@
         <span class="nav-text">코칭 합의서</span>
       </button>
 
-      <div class="nav-group-label">코칭 세션</div>
-      <button type="button" class="nav-link" data-tab="session1">
+      <div class="nav-group-label">코칭 모델</div>
+
+      <div class="nav-subgroup-label">
+        <span class="subgroup-dot"></span>
+        <span>커리어 코칭</span>
+      </div>
+      <button type="button" class="nav-link nav-sub-link" data-tab="session1">
         <span class="nav-num num" aria-hidden="true">1</span>
         <span class="nav-text">1회차 · 자기 탐색</span>
       </button>
-      <button type="button" class="nav-link" data-tab="session2">
+      <button type="button" class="nav-link nav-sub-link" data-tab="session2">
         <span class="nav-num num" aria-hidden="true">2</span>
         <span class="nav-text">2회차 · 리더십 &amp; 관계</span>
       </button>
-      <button type="button" class="nav-link" data-tab="session3">
+      <button type="button" class="nav-link nav-sub-link" data-tab="session3">
         <span class="nav-num num" aria-hidden="true">3</span>
         <span class="nav-text">3회차 · 셀프 코칭</span>
+      </button>
+
+      <div class="nav-subgroup-label">
+        <span class="subgroup-dot"></span>
+        <span>라이프 코칭</span>
+      </div>
+      <button type="button" class="nav-link nav-sub-link" data-tab="lifecoach1">
+        <span class="nav-num num" aria-hidden="true">1</span>
+        <span class="nav-text">1회차 · 라포 &amp; 코칭합의</span>
+      </button>
+      <button type="button" class="nav-link nav-sub-link" data-tab="lifecoach2">
+        <span class="nav-num num" aria-hidden="true">2</span>
+        <span class="nav-text">2회차 · 통찰 &amp; 의식확장</span>
+      </button>
+      <button type="button" class="nav-link nav-sub-link" data-tab="lifecoach3">
+        <span class="nav-num num" aria-hidden="true">3</span>
+        <span class="nav-text">3회차 · 행동설계 &amp; 통합</span>
       </button>
 
       <div class="nav-group-label coach-only">코치 도구</div>
       <button type="button" class="nav-link coach-only" data-tab="log">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         <span class="nav-text">코칭 일지</span>
+      </button>
+      <button type="button" class="nav-link coach-only" data-tab="sharinghub">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span class="nav-text">코칭 툴 나눔터</span>
       </button>
 
       <div class="nav-group-label">자료</div>
@@ -93,38 +119,76 @@
          Section 01: 프로그램 개요 (Overview)
          -------------------------------------------------------------------- -->
     <section class="page-section active" id="section-overview">
-      <div class="surface-card">
+      <!-- Hero: 프로그램 인트로 -->
+      <section class="overview-hero" aria-labelledby="overviewHeroTitle">
+        <span class="hero-eyebrow"><span class="hero-dot" aria-hidden="true"></span>Program Overview</span>
+        <h2 class="hero-title" id="overviewHeroTitle">4기 미래경영자 심화과정<br>맞춤형 1:1 코칭 여정</h2>
+        <p class="hero-lede">
+          미래경영자 심화과정 코칭은 <strong>경영자 후보 및 가업승계 2세</strong>가 자신의 고유한 강점과 보완점을 객관적으로 인식하고,
+          선대 경영자의 그늘에서 벗어나 <strong>&lsquo;나다운 경영자&rsquo;</strong>로서의 정체성과 실질적인 조직 변화관리 능력을 확립하도록 돕는
+          3회차 맞춤형 코칭 여정입니다.
+        </p>
+        <dl class="hero-meta">
+          <div class="hero-meta-item">
+            <dt>코칭 대상</dt>
+            <dd>미래경영자 심화과정 신청자 9명</dd>
+          </div>
+          <div class="hero-meta-item">
+            <dt>일정 및 횟수</dt>
+            <dd class="num">총 3회기 · 회기당 60분</dd>
+          </div>
+          <div class="hero-meta-item">
+            <dt>장소 및 방식</dt>
+            <dd>상생협력 아카데미 교육센터 (1:1 대면)</dd>
+          </div>
+        </dl>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-primary" id="btnResumeWork">이어서 작성하기</button>
+          <button type="button" class="btn btn-secondary" data-jump-tab="agreement">코칭 합의서 열기</button>
+          <button type="button" class="btn btn-ghost" data-jump-tab="toolkit">참조 자료실</button>
+        </div>
+      </section>
+
+      <!-- 진행 현황 스트립 (로컬 저장 데이터 기준) -->
+      <div class="surface-card reveal">
         <div class="card-header">
           <div class="card-header-left">
-            <span class="label-text text-action">PROGRAM OVERVIEW</span>
-            <h2 class="card-title">4기 미래경영자 심화과정 코칭 프로그램</h2>
+            <span class="label-text">MY PROGRESS</span>
+            <h2 class="card-title">나의 워크시트 진행 현황</h2>
+            <p class="card-subtitle">이 브라우저에 저장된 작성 내용을 기준으로 자동 집계됩니다.</p>
           </div>
-          <span class="badge badge-brand">맞춤형 1:1 대면 코칭</span>
+          <span class="badge badge-neutral num" id="progressOverallBadge">0%</span>
         </div>
-        <p class="body-text">
-          미래경영자 심화과정 코칭은 <strong>경영자 후보 및 가업승계 2세</strong>가 자신의 고유한 강점과 보완점을 객관적으로 인식하고,
-          선대 경영자의 그늘에서 벗어나 <strong>'나다운 경영자'</strong>로서의 정체성과 실질적인 조직 변화관리 능력을 확립하도록 돕는 3회차 맞춤형 코칭 여정입니다.
-        </p>
-
-        <!-- Operation Details Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4);">
-          <div style="background-color: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
-            <div class="caption-text">코칭 대상</div>
-            <div class="body-strong">미래경영자 심화과정 신청자 9명</div>
-          </div>
-          <div style="background-color: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
-            <div class="caption-text">일정 및 횟수</div>
-            <div class="body-strong">총 3회기 (회기당 60분 집중 진행)</div>
-          </div>
-          <div style="background-color: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
-            <div class="caption-text">장소 및 방식</div>
-            <div class="body-strong">삼성전자 상생협력 아카데미 교육센터 회의실 (1:1)</div>
-          </div>
+        <div class="progress-strip" id="progressStrip">
+          <button type="button" class="progress-card" data-jump-tab="agreement" data-progress="agreement">
+            <span class="progress-card-top">
+              <span class="progress-card-label">코칭 합의서</span>
+              <span class="progress-card-value" data-progress-value>0<small>%</small></span>
+            </span>
+            <span class="progress-track"><span class="progress-bar" data-progress-bar></span></span>
+            <span class="progress-card-hint" data-progress-hint>작성 전</span>
+          </button>
+          <button type="button" class="progress-card" data-jump-tab="session1" data-progress="career">
+            <span class="progress-card-top">
+              <span class="progress-card-label">커리어 코칭 워크시트</span>
+              <span class="progress-card-value" data-progress-value>0<small>%</small></span>
+            </span>
+            <span class="progress-track"><span class="progress-bar" data-progress-bar></span></span>
+            <span class="progress-card-hint" data-progress-hint>작성 전</span>
+          </button>
+          <button type="button" class="progress-card" data-jump-tab="lifecoach1" data-progress="life">
+            <span class="progress-card-top">
+              <span class="progress-card-label">라이프 코칭 워크시트</span>
+              <span class="progress-card-value" data-progress-value>0<small>%</small></span>
+            </span>
+            <span class="progress-track"><span class="progress-bar" data-progress-bar></span></span>
+            <span class="progress-card-hint" data-progress-hint>작성 전</span>
+          </button>
         </div>
       </div>
 
       <!-- Coaching Philosophy & Comparison Grid -->
-      <div class="surface-card">
+      <div class="surface-card reveal">
         <div class="card-header">
           <div class="card-header-left">
             <span class="label-text">COACHING PHILOSOPHY</span>
@@ -163,33 +227,63 @@
         </div>
       </div>
 
-      <!-- 3-Session Journey Timeline -->
-      <div class="surface-card">
+      <!-- Career Coaching Journey Timeline -->
+      <div class="surface-card reveal">
         <div class="card-header">
           <div class="card-header-left">
-            <span class="label-text">ROADMAP</span>
-            <h2 class="card-title">3회차 성장 로드맵 (Identity → Leadership → Self-Reliance)</h2>
+            <span class="label-text">TRACK 01 · CAREER COACHING</span>
+            <h2 class="card-title">커리어 코칭 3회차 로드맵 (Identity → Leadership → Self-Reliance)</h2>
           </div>
         </div>
         <div class="journey-timeline">
-          <div class="journey-step" data-jump-tab="session1">
+          <button type="button" class="journey-step" data-jump-tab="session1">
             <span class="journey-step-num">SESSION 01</span>
             <h3>2세 경영자로서의 자기 탐색</h3>
             <p>인생 그래프와 핵심 가치 발굴을 통해 '선대의 그늘'이 아닌 '나다운 경영자'의 기준을 정립하고 코칭 목표를 합의합니다.</p>
-            <span class="caption-text text-action">인생 그래프 · 핵심 가치 · 합의서 →</span>
-          </div>
-          <div class="journey-step" data-jump-tab="session2">
+            <span class="caption-text text-action step-cta">인생 그래프 · 핵심 가치 · 합의서</span>
+          </button>
+          <button type="button" class="journey-step" data-jump-tab="session2">
             <span class="journey-step-num">SESSION 02</span>
-            <h3>리더십 스타일 진단 & 관계 관리</h3>
+            <h3>리더십 스타일 진단 &amp; 관계 관리</h3>
             <p>조직 내 베테랑 임직원 및 선대와의 소통 갈등을 점검하고, 리더십 8대 역량 수레바퀴와 회복탄력성 프레임워크를 다룹니다.</p>
-            <span class="caption-text text-action">리더십 수레바퀴 · 관점 전환 →</span>
-          </div>
-          <div class="journey-step" data-jump-tab="session3">
+            <span class="caption-text text-action step-cta">리더십 수레바퀴 · 관점 전환</span>
+          </button>
+          <button type="button" class="journey-step" data-jump-tab="session3">
             <span class="journey-step-num">SESSION 03</span>
             <h3>지속가능한 셀프 코칭 체계</h3>
             <p>미래 3개년 경영 비전 만다라트 목표를 구체화하고, 위기 및 슬럼프 상황에서 스스로 해답을 찾는 5단계 셀프 코칭 루틴을 확립합니다.</p>
-            <span class="caption-text text-action">만다라트 · 셀프코칭 루틴 →</span>
+            <span class="caption-text text-action step-cta">만다라트 · 셀프코칭 루틴</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Life Coaching Journey Timeline -->
+      <div class="surface-card reveal">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text">TRACK 02 · LIFE COACHING</span>
+            <h2 class="card-title">라이프 코칭 3회차 로드맵 (Rapport &amp; Agreement → Insight → Action &amp; Identity)</h2>
           </div>
+        </div>
+        <div class="journey-timeline">
+          <button type="button" class="journey-step" data-jump-tab="lifecoach1">
+            <span class="journey-step-num">SESSION 01</span>
+            <h3>라포 형성 &amp; 코칭 합의</h3>
+            <p>안전한 신뢰 공간에서 고객의 내면(Being)을 탐색하고, 5단계 프로세스를 통해 명확한 코칭 주제와 긍정적 목표를 합의합니다.</p>
+            <span class="caption-text text-action step-cta">스몰 코칭 · 합의 5단계 · Being 탐색</span>
+          </button>
+          <button type="button" class="journey-step" data-jump-tab="lifecoach2">
+            <span class="journey-step-num">SESSION 02</span>
+            <h3>통찰 및 탐색 / 의식 확장</h3>
+            <p>아하 모먼트와 핵심 키워드를 포착하고, 멘토·미래의 나·무제한 가능성 등 3대 관점 전환을 통해 새로운 통찰을 이끌어냅니다.</p>
+            <span class="caption-text text-action step-cta">아하 모먼트 · 3대 관점전환 · 의식확장</span>
+          </button>
+          <button type="button" class="journey-step" data-jump-tab="lifecoach3">
+            <span class="journey-step-num">SESSION 03</span>
+            <h3>행동 설계 &amp; 정체성 통합</h3>
+            <p>실행 계획을 핵심 가치와 통합하고 새로운 나의 모습을 명명(Naming)하며, 초반 목표 성과를 3대 키워드로 완성합니다.</p>
+            <span class="caption-text text-action step-cta">정체성 명명 · 가치 얼라인 · 성과 3대 키워드</span>
+          </button>
         </div>
       </div>
     </section>
@@ -213,7 +307,7 @@
 
         <!-- Quick View Card Content -->
         <div class="session-quick-view">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4);">
+          <div class="grid-2">
             <div class="info-block">
               <h4 class="heading-3">이 단계의 목적</h4>
               <p class="body-text">타인의 기대나 선대 경영자의 잔상을 걷어내고, 내가 소중히 여기는 핵심 가치와 과거 변곡점을 통해 나의 경영자 정체성을 발견합니다.</p>
@@ -295,7 +389,7 @@
         </div>
 
         <div class="session-quick-view">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4);">
+          <div class="grid-2">
             <div class="info-block">
               <h4 class="heading-3">이 단계의 목적</h4>
               <p class="body-text">선대 경영자 및 현장 베테랑 임직원과의 소통 마찰을 극복하고, 경영자로서의 균형 잡힌 역량 진단과 회복탄력성을 구축합니다.</p>
@@ -364,7 +458,7 @@
         </div>
 
         <div class="session-quick-view">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4);">
+          <div class="grid-2">
             <div class="info-block">
               <h4 class="heading-3">이 단계의 목적</h4>
               <p class="body-text">향후 3~5년 후의 미래 경영 청사진을 구체화하고, 코칭 종료 후에도 위기 시 스스로 점검하는 5단계 셀프 코칭 루틴을 체득합니다.</p>
@@ -448,6 +542,403 @@
       </div>
     </section>
 
+    <!-- ======================================================================
+         Section: 라이프 코칭 1회차 (Life Coaching 1: Rapport & Agreement)
+         ====================================================================== -->
+    <section class="page-section" id="section-lifecoach1">
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text text-action">LIFE COACHING · SESSION 01</span>
+            <h2 class="card-title">1회차: 라포 형성 및 코칭 합의 (Being 탐색과 목표 설정)</h2>
+          </div>
+          <div class="tabs" role="tablist" aria-label="라이프 코칭 1회차 보기 방식">
+            <button type="button" class="tab is-active" role="tab" aria-selected="true" data-view-btn="lifecoach1" data-mode="quick">Quick View</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-view-btn="lifecoach1" data-mode="deep" tabindex="-1">Deep Guide</button>
+          </div>
+        </div>
+
+        <!-- Quick View -->
+        <div class="session-quick-view">
+          <div class="grid-2">
+            <div class="info-block">
+              <h4 class="heading-3">세션 목표 &amp; 핵심 공식</h4>
+              <p class="body-text">
+                안전하고 신뢰로운 라포(Rapport) 공간을 열고, 단순 행동(Doing)에 머물지 않고 고객의 내면(Being: 감정·욕구·가치·정체성)을 탐색하여 명확한 <strong>코칭 주제와 목표</strong>를 합의합니다.
+              </p>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); margin-top: var(--space-2); border-left: 3px solid var(--color-action);">
+                <strong>합의 5단계 흐름:</strong> 주제 질문 → 주제 합의 → 목표 질문 → 목표 구체화 → 목표 합의
+              </div>
+            </div>
+            <div class="info-block">
+              <h4 class="heading-3">핵심 질문 하이라이트</h4>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); font-style: italic; margin-bottom: var(--space-2);">
+                “오늘 어떤 주제로 이야기 나누면 좋을까요? 그 주제가 고객님께 어떤 면에서 중요한 부분인가요?”
+              </div>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); font-style: italic;">
+                “대화를 마치고 나면 어떤 결과를 손에 쥐고 싶으신가요? 고객님이 말씀하신 그 모습은 구체적으로 어떤 상태인가요?”
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep Guide -->
+        <div class="session-deep-view" style="display: none;">
+          <!-- 4대 핵심 전략 배너 -->
+          <div class="coach-tip-callout" style="margin-bottom: var(--space-5);">
+            <h4>라이프 코칭대화 핵심 4대 전략</h4>
+            <ul style="padding-left: var(--space-4); margin-top: var(--space-2); line-height: 1.7;">
+              <li><strong>Being과 Doing의 연결:</strong> 단순히 '무엇을 할 것인가(Doing)'에 매몰되지 않고 감정·욕구·가치·정체성(Being)을 심층 탐색하여 행동과 연결</li>
+              <li><strong>Do Verbatim (고객 언어 그대로 반영):</strong> 코치의 해석이나 판단으로 바꾸지 않고 고객이 표현한 어휘를 그대로 거울처럼 반영</li>
+              <li><strong>키워드 탐색 및 얼라인(Align):</strong> 고객이 반복하는 중요 키워드를 포착하여 오늘 코칭 목표와 끊임없이 연결</li>
+              <li><strong>명확한 심사항목 워딩 사용:</strong> '주제', '목표', '성과' 워딩을 명확히 대화에 사용하여 프로세스의 투명성 확보</li>
+            </ul>
+          </div>
+
+          <div class="grid-2">
+            <!-- 1단계: 라포 형성 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <span class="badge badge-brand">1단계</span>
+              <h3 class="heading-3" style="margin-top: var(--space-2);">라포 형성 (스몰 코칭)</h3>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">안전하고 신뢰로운 공간 형성 · 적시성 · 현실성 · 진정성</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-strong">현실적 안부 질문</div>
+                  <div class="caption-text">“벌써 3월 중순이 되었네요. 요즘 이 시간들을 어떻게 보내고 계신가요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">적시성 있는 반응</div>
+                  <div class="caption-text">“오늘 조금 기침을 하시는데, 목 컨디션은 어떠신가요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">진정성 탐색 질문</div>
+                  <div class="caption-text">“(기쁜 일에 대해) 어떤 부분이 가장 기억에 남으시나요? / 어떤 부분이 가장 기분 좋으세요?”</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2단계: 코칭 합의 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <span class="badge badge-brand">2단계</span>
+              <h3 class="heading-3" style="margin-top: var(--space-2);">코칭 합의 (주제 &amp; 목표 설정)</h3>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">주제 질문 → 주제 합의 → 목표 질문 → 목표 구체화 → 목표 합의</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-strong">주제 질문 및 합의</div>
+                  <div class="caption-text">“오늘 어떤 <strong>주제</strong>로 대화하면 좋을까요?” → “그럼 오늘 우리의 대화는 [주제]를 <strong>주제</strong>로 나누면 될까요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">주제 계기 및 의미(Being) 탐색</div>
+                  <div class="caption-text">“[주제]를 생각하시게 된 계기는 무엇인가요? 그 주제가 고객님께 어떤 면에서 중요한가요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">목표 구체화 (추상적/부정적 표현 전환)</div>
+                  <div class="caption-text">
+                    • <em>단어 쪼개기:</em> “말씀하신 '정말 건강하다'는 것은 어떤 모습인가요?”<br>
+                    • <em>부정적 표현 전환:</em> “방해받지 않고 제대로 하고 싶다는 것은 구체적으로 어떤 의미인가요?”
+                  </div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">목표 합의 확인</div>
+                  <div class="caption-text">“그럼 오늘 대화의 <strong>목표</strong>는 [구체적 긍정 목표]로 삼고 대화를 이어가면 될까요?”</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1회차 워크시트 카드 -->
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text">WORKSHEET</span>
+            <h3 class="card-title">라이프 코칭 합의서 및 Being 탐색 시트</h3>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSaveLifeWorksheet1">합의 내용 저장</button>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="life1-topic">1. 오늘 다루고자 하는 핵심 주제 (Do Verbatim)</label>
+            <input type="text" class="input-text" id="life1-topic" placeholder="예: [건강 관리] 코칭 공부를 위한 체력 회복">
+            <span class="caption-text">고객이 사용한 단어 그대로 기재</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="life1-reason">2. 주제 선정 계기 및 내면적 중요성 (Being 탐색)</label>
+            <input type="text" class="input-text" id="life1-reason" placeholder="예: 최근 체력 저하로 집중력이 떨어져 나다운 에너지를 되찾고 싶음">
+            <span class="caption-text">이 주제가 고객에게 왜 소중하고 중요한지</span>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label" for="life1-goal">3. 구체화된 긍정적 코칭 목표 (Goal Agreement)</label>
+            <textarea class="textarea" id="life1-goal" rows="2" placeholder="예: 코칭 공부를 잘하기 위해 규칙적인 아침 운동 루틴과 수면 패턴을 확립하는 방법 찾기"></textarea>
+            <span class="caption-text">추상적 단어를 구체화하고, 부정적 회피 표현을 긍정적 도달 목표로 전환</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Section: 라이프 코칭 2회차 (Life Coaching 2: Insight & Expansion)
+         ====================================================================== -->
+    <section class="page-section" id="section-lifecoach2">
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text text-action">LIFE COACHING · SESSION 02</span>
+            <h2 class="card-title">2회차: 통찰 및 탐색 / 의식 확장 (아하 모먼트와 관점 전환)</h2>
+          </div>
+          <div class="tabs" role="tablist" aria-label="라이프 코칭 2회차 보기 방식">
+            <button type="button" class="tab is-active" role="tab" aria-selected="true" data-view-btn="lifecoach2" data-mode="quick">Quick View</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-view-btn="lifecoach2" data-mode="deep" tabindex="-1">Deep Guide</button>
+          </div>
+        </div>
+
+        <!-- Quick View -->
+        <div class="session-quick-view">
+          <div class="grid-2">
+            <div class="info-block">
+              <h4 class="heading-3">세션 목표 &amp; 핵심 원칙</h4>
+              <p class="body-text">
+                대화 중간중간 알아차림(아하 모먼트)을 촉진하고, 핵심 키워드를 포착하여 의미를 확장합니다. 다각도의 <strong>관점 전환(Perspective Shift)</strong>을 통해 닫혀 있던 의식을 열어 새로운 통찰을 이끌어냅니다.
+              </p>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); margin-top: var(--space-2); border-left: 3px solid var(--color-action);">
+                <strong>절대 원칙 (Align):</strong> 깊은 탐색과 관점 전환 후에는 반드시 '오늘의 코칭 목표'와 연결해야 합니다.
+              </div>
+            </div>
+            <div class="info-block">
+              <h4 class="heading-3">핵심 질문 하이라이트</h4>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); font-style: italic; margin-bottom: var(--space-2);">
+                “10년 뒤 모든 꿈을 이룬 미래의 고객님이 오늘의 나에게 찾아와 조언을 해 준다면 무엇이라고 말해 줄까요?”
+              </div>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); font-style: italic;">
+                “그 목표를 이룬 상태의 에너지를 색깔이나 모양, 온도로 비유해 본다면 어떻게 표현할 수 있을까요?”
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep Guide -->
+        <div class="session-deep-view" style="display: none;">
+          <div class="grid-4">
+            <!-- 영역 1: 알아차림 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <h4 class="heading-3 text-action">① 알아차림 (아하 모먼트) 질문</h4>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">정리되는 생각과 추구하는 내면 가치 확인</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-text">“오늘 코칭 목표에 대해 쭉 말씀해 주셨는데, 어떤 생각이 정리가 되세요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-text">“지금까지 말씀하신 것을 바탕으로 고객님은 어떤 가치를 추구하시는 분이라고 여겨지세요?”</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 영역 2: 핵심 키워드 탐색 및 연결 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <h4 class="heading-3 text-action">② 핵심 키워드 탐색 &amp; 연결</h4>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">고객의 반복 어휘 포착 및 목표 적용</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-text">“말씀하시는 중에 '[아이들]'이라는 표현을 여러 번 하셨네요. 고객님에게 자녀분들은 어떤 존재인가요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-text">“말씀하신 [자녀와의 관계]를 오늘 목표에는 어떻게 적용해 볼 수 있을까요?”</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 영역 3: 의식 확장 & 의미 구체화 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <h4 class="heading-3 text-action">③ 의식 확장 &amp; 의미 구체화</h4>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">현실화된 모습 · 감각적 비유 · 심층 가치</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-text">“방해받지 않고 제대로 하고 싶다는 것은 구체적으로 어떤 모습이 현실화되었을 때를 의미하나요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-text">“그 목표를 이룬 상태의 에너지를 색깔이나 모양, 혹은 온도로 비유해 본다면 어떻게 표현할 수 있을까요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-text">“이 목표를 달성하려는 열정 뒤에는 고객님의 어떤 소중한 가치가 자리 잡고 있나요?”</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 영역 4: 관점 전환 및 재구성 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <h4 class="heading-3 text-action">④ 관점 전환 및 재구성 (Perspective Shift)</h4>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">멘토의 시선 · 미래의 나 · 실패 불가능 상황</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-text">“고객님이 평소 가장 존경하는 멘토의 시선으로 지금 이 상황을 바라본다면 그는 어떤 새로운 가능성을 발견할까요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-text">“10년 뒤 모든 꿈을 이룬 미래의 고객님이 오늘의 나에게 찾아와 조언을 해 준다면 무엇이라고 말해 줄까요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-text">“만약 실패가 불가능한 상황이라면, 지금 이 장애물은 고객님께 어떤 도전 과제로 보이시나요?”</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2회차 워크시트 카드: 관점 전환 매트릭스 -->
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text">WORKSHEET</span>
+            <h3 class="card-title">3대 관점 전환(Perspective Shift) 성찰 카드</h3>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSaveLifeWorksheet2">성찰 내용 저장</button>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label class="form-label" for="life2-mentor">렌즈 1: 존경하는 멘토의 시선</label>
+            <textarea class="textarea" id="life2-mentor" rows="3" placeholder="멘토라면 지금 나의 상황에서 어떤 가능성과 기회를 발견해 줄 것인가?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="life2-future">렌즈 2: 10년 뒤 미래의 내가 건네는 조언</label>
+            <textarea class="textarea" id="life2-future" rows="3" placeholder="모든 것을 극복하고 목표를 달성한 미래의 내가 오늘의 나에게 해주는 한마디는?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="life2-nofail">렌즈 3: 실패가 불가능하다면? (무한 가능성)</label>
+            <textarea class="textarea" id="life2-nofail" rows="3" placeholder="실패할 위험이 전혀 없다면, 지금 마주한 장애물은 어떤 설레는 도전 과제인가?"></textarea>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label" for="life2-aha">오늘의 핵심 알아차림 (Aha Moment) &amp; 목표 연결</label>
+            <textarea class="textarea" id="life2-aha" rows="2" placeholder="관점 전환을 통해 새롭게 깨달은 통찰과, 이것이 나의 목표에 주는 의미"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Section: 라이프 코칭 3회차 (Life Coaching 3: Action & Identity)
+         ====================================================================== -->
+    <section class="page-section" id="section-lifecoach3">
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text text-action">LIFE COACHING · SESSION 03</span>
+            <h2 class="card-title">3회차: 행동 설계 및 정체성 통합 &amp; 성과 마무리 (Doing과 Being의 일치)</h2>
+          </div>
+          <div class="tabs" role="tablist" aria-label="라이프 코칭 3회차 보기 방식">
+            <button type="button" class="tab is-active" role="tab" aria-selected="true" data-view-btn="lifecoach3" data-mode="quick">Quick View</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-view-btn="lifecoach3" data-mode="deep" tabindex="-1">Deep Guide</button>
+          </div>
+        </div>
+
+        <!-- Quick View -->
+        <div class="session-quick-view">
+          <div class="grid-2">
+            <div class="info-block">
+              <h4 class="heading-3">세션 목표 &amp; 핵심 공식</h4>
+              <p class="body-text">
+                단순한 할 일(Doing) 목록을 넘어 실행 계획이 고객의 내면 가치와 정체성(Being)에 뿌리내리도록 연결합니다. 새로운 모습을 명명(Naming)하고, 1회차에 합의했던 목표의 성과를 확인하며 3대 키워드로 완성합니다.
+              </p>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); margin-top: var(--space-2); border-left: 3px solid var(--color-action);">
+                <strong>행동·정체성 통합:</strong> 실행 계획 ↔ 핵심 가치 연결 + 새로운 모습 명명 + 성과 3대 키워드 요약
+              </div>
+            </div>
+            <div class="info-block">
+              <h4 class="heading-3">핵심 질문 하이라이트</h4>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); font-style: italic; margin-bottom: var(--space-2);">
+                “이러한 변화를 실천해 나가는 과정 속에서 스스로를 어떤 사람이라고 새롭게 정의할 수 있을까요? 새로운 모습에 이름을 붙여 준다면?”
+              </div>
+              <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); font-style: italic;">
+                “오늘 코칭의 성과를 3가지 키워드로 요약해 본다면 무엇이며, 이것이 삶에서 어떤 특별한 의미가 있습니까?”
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep Guide -->
+        <div class="session-deep-view" style="display: none;">
+          <div class="grid-2">
+            <!-- 4단계: 행동 설계 및 정체성 통합 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <span class="badge badge-brand">4단계</span>
+              <h3 class="heading-3" style="margin-top: var(--space-2);">행동 설계 및 정체성 통합</h3>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">실행 계획 ↔ 가치 연결 · 정체성 재정의 · 새로운 모습 명명</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-strong">실행 계획과 가치 연결</div>
+                  <div class="caption-text">“오늘 세우신 이 실행 계획들은 고객님이 평소 가장 소중하게 여기시는 [책임감과 성장]이라는 가치와 어떻게 연결이 되나요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">정체성 정의 (Identity)</div>
+                  <div class="caption-text">“이러한 변화를 꾸준히 실천해 나가는 과정 속에서 고객님은 스스로를 어떤 사람이라고 새롭게 정의할 수 있을까요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">새로운 모습 명명 (Naming the New Self)</div>
+                  <div class="caption-text">“오늘 세션에서 발견한 본인의 새로운 모습에 이름을 붙여 준다면 무엇이라고 부르고 싶으신가요? 그 이름은 앞으로의 행동에 어떤 영향을 미칠까요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">구체적 실행 및 점검</div>
+                  <div class="caption-text">“알아차림을 바탕으로 어떤 것을 언제 먼저 실행해 보시겠어요? 방해 요소가 있다면 무엇이고, 누가 도와주면 더 잘할 수 있을까요?”</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5단계: 성과 확인 및 마무리 -->
+            <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+              <span class="badge badge-brand">5단계</span>
+              <h3 class="heading-3" style="margin-top: var(--space-2);">성과 확인 및 마무리</h3>
+              <p class="caption-text" style="margin-bottom: var(--space-3);">초반 합의 목표 달성 점검 · 학습과 알아차림 · 키워드 요약</p>
+              <div class="action-checklist">
+                <div class="action-item">
+                  <div class="body-strong">목표 성과 확인</div>
+                  <div class="caption-text">“오늘 대화를 시작하며 [실행을 위한 3가지 전략]을 얻고 싶다고 하셨는데, 지금은 어떠신가요?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">학습과 알아차림 확인</div>
+                  <div class="caption-text">“오늘 코칭을 통한 학습과 알아차림이 고객님의 삶에서 어떤 특별한 의미가 있습니까?”</div>
+                </div>
+                <div class="action-item">
+                  <div class="body-strong">3대 키워드 요약</div>
+                  <div class="caption-text">“오늘 코칭의 성과를 3가지 키워드로 요약해 본다면 뭐라고 정리해 볼 수 있을까요?”</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3회차 워크시트 카드 -->
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text">WORKSHEET</span>
+            <h3 class="card-title">라이프 정체성(Being) 통합 및 지속 실천 플래너</h3>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSaveLifeWorksheet3">플래너 저장</button>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="life3-identity-name">1. 내가 명명한 새로운 모습의 이름 (Identity Naming)</label>
+            <input type="text" class="input-text" id="life3-identity-name" placeholder="예: '주도적으로 에너지를 창출하는 탐험가'">
+            <span class="caption-text">새로운 나의 정체성을 상징하는 명칭</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="life3-value-link">2. 실행 계획과 연결된 내면의 핵심 가치</label>
+            <input type="text" class="input-text" id="life3-value-link" placeholder="예: 성장, 진정성, 지속가능한 건강">
+            <span class="caption-text">이 행동이 내 삶의 어떤 가치와 연결되는가</span>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label" for="life3-actions">3. 첫 번째 실행 행동 및 방해 요소 대처 (When / What / Who)</label>
+            <textarea class="textarea" id="life3-actions" rows="2" placeholder="• 언제 무엇을 먼저 실행할 것인가?&#10;• 예상되는 방해 요소와 나를 도울 조력자는 누구인가?"></textarea>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label" for="life3-keywords">4. 코칭 성과 3대 핵심 키워드 &amp; 삶의 의미</label>
+            <input type="text" class="input-text" id="life3-keywords" placeholder="키워드 1 / 키워드 2 / 키워드 3 (예: 활력 / 루틴의 힘 / 주도권)">
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- --------------------------------------------------------------------
          Section 05: 코칭 합의서 (Agreement)
          -------------------------------------------------------------------- -->
@@ -466,7 +957,7 @@
         <p class="caption-text">1회기 시작일에 코치와 고객(리더)이 상호 이해와 신뢰에 기초하여 함께 작성합니다.</p>
 
         <form id="agreementForm" style="display: flex; flex-direction: column; gap: var(--space-4);" onsubmit="return false;">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+          <div class="grid-4">
             <div class="form-group">
               <label class="form-label required">고객(리더) 성명</label>
               <input type="text" class="form-input" id="agree_coacheeName" placeholder="예: 홍길동">
@@ -588,6 +1079,38 @@
       </div>
     </section>
 
+    <!-- ======================================================================
+         Section: 코칭 툴 나눔터 (Coaching Tool Sharing Hub)
+         ====================================================================== -->
+    <section class="page-section" id="section-sharinghub">
+      <div class="surface-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="label-text text-action">COACH TOOL SHARING HUB</span>
+            <h2 class="card-title">코칭 툴 나눔터 (CT-Sharing Hub)</h2>
+          </div>
+          <div style="display: flex; gap: var(--space-2); align-items: center;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnReloadSharingHub" title="나눔터 다시 불러오기">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              새로고침
+            </button>
+            <a href="https://mkgreeme-web.github.io/CT-Sharing_Hub/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              새 탭에서 열기
+            </a>
+          </div>
+        </div>
+        <p class="body-text" style="margin-bottom: var(--space-3);">
+          코칭 현장에서 즉시 활용할 수 있는 다양한 코칭 기법, 질문 툴킷, 진단 도구를 공유하고 탐색할 수 있는 온라인 나눔터입니다.
+        </p>
+
+        <!-- iframe container -->
+        <div class="iframe-container">
+          <iframe id="sharingHubIframe" src="https://mkgreeme-web.github.io/CT-Sharing_Hub/" title="코칭 툴 나눔터" allow="fullscreen" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
     <!-- --------------------------------------------------------------------
          Section 07: 참조 자료실 (Toolkit & Question Library)
          -------------------------------------------------------------------- -->
@@ -596,7 +1119,6 @@
         <div class="card-header">
           <div class="card-header-left">
             <span class="label-text">COACHING TOOLKIT</span>
-            <h2 class="card-title">코칭 GPS 13 핵심 질문 라이브러리 (미래경영자 특화 50선)</h2>
           </div>
         </div>
         <p class="caption-text">상황별로 필요한 질문을 클릭하여 펼쳐보거나 [복사] 버튼으로 클립보드에 담으세요.</p>
@@ -606,7 +1128,6 @@
           <div class="qa-item open">
             <button type="button" class="qa-trigger">
               <span>카테고리 1: 경영자 정체성 및 존재감 탐색 (Being)</span>
-              <span class="badge badge-neutral">12개 질문</span>
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
@@ -630,7 +1151,6 @@
           <div class="qa-item">
             <button type="button" class="qa-trigger">
               <span>카테고리 2: 조직 내 소통 마찰 및 세대 갈등 해소</span>
-              <span class="badge badge-neutral">14개 질문</span>
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
@@ -650,7 +1170,6 @@
           <div class="qa-item">
             <button type="button" class="qa-trigger">
               <span>카테고리 3: 의사결정 장애물 및 비합리적 신념 깨기</span>
-              <span class="badge badge-neutral">12개 질문</span>
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
@@ -670,7 +1189,6 @@
           <div class="qa-item">
             <button type="button" class="qa-trigger">
               <span>카테고리 4: 셀프 코칭 및 회복탄력성 (Resilience)</span>
-              <span class="badge badge-neutral">12개 질문</span>
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
@@ -696,7 +1214,7 @@
             <h2 class="card-title">코치의 Presence & 경청의 3단계</h2>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4);">
+        <div class="grid-3">
           <div style="background-color: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
             <div class="caption-text text-action" style="font-weight: 700;">LEVEL 1: 내부적 경청 (Internal)</div>
             <div class="body-strong" style="margin: 4px 0;">나의 생각에 머무는 듣기</div>
@@ -722,9 +1240,13 @@
   <!-- ======================================================================
        Toast Notifications Container
        ====================================================================== -->
+  <button type="button" class="to-top-btn" id="toTopBtn" aria-label="맨 위로 이동">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  </button>
+
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- Client Application Script -->
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

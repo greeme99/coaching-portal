@@ -72,10 +72,10 @@
 
   /* Elevation Shadows (Light) */
   --shadow-none: none;
-  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
-  --shadow-md: 0 2px 8px rgba(17, 24, 39, 0.08);
-  --shadow-lg: 0 8px 24px rgba(17, 24, 39, 0.10);
-  --shadow-overlay: 0 16px 48px rgba(17, 24, 39, 0.18);
+  --shadow-sm: 0 1px 2px rgba(30, 58, 110, 0.04), 0 2px 10px rgba(30, 58, 110, 0.04);
+  --shadow-md: 0 2px 6px rgba(30, 58, 110, 0.05), 0 8px 24px rgba(30, 58, 110, 0.07);
+  --shadow-lg: 0 4px 12px rgba(30, 58, 110, 0.06), 0 18px 44px rgba(30, 58, 110, 0.10);
+  --shadow-overlay: 0 24px 64px rgba(30, 58, 110, 0.18);
 }
 
 [data-theme="dark"] {
@@ -125,6 +125,55 @@
   --shadow-overlay: 0 16px 48px rgba(0, 0, 0, 0.65);
 }
 
+[data-theme="gray-skyblue"] {
+  /* Gray-SkyBlue Raw Palette */
+  --gsky-canvas: #edf2f7;
+  --gsky-surface: #ffffff;
+  --gsky-raised: #f8fafc;
+  --gsky-border: #cbd5e1;
+  --gsky-border-strong: #94a3b8;
+  --gsky-ink: #1e293b;
+  --gsky-ink-2: #475569;
+  --gsky-blue: #0284c7;
+  --gsky-blue-hover: #0369a1;
+  --gsky-blue-tint: #e0f2fe;
+
+  /* Semantic Colors (Gray-SkyBlue) */
+  --color-bg-canvas: var(--gsky-canvas);
+  --color-bg-surface: var(--gsky-surface);
+  --color-bg-raised: var(--gsky-raised);
+  --color-bg-subtle: #f1f5f9;
+  --color-bg-hover: #e2e8f0;
+  --color-bg-selected: var(--gsky-blue-tint);
+
+  --color-border: var(--gsky-border);
+  --color-border-strong: var(--gsky-border-strong);
+
+  --color-text-primary: var(--gsky-ink);
+  --color-text-secondary: var(--gsky-ink-2);
+  --color-text-muted: #64748b;
+  --color-text-onbrand: #ffffff;
+
+  --color-action: var(--gsky-blue);
+  --color-action-hover: var(--gsky-blue-hover);
+  --color-fill-brand: #38bdf8;
+
+  --color-status-success: #059669;
+  --color-status-warning: #d97706;
+  --color-status-danger: #dc2626;
+  --color-status-success-bg: #d1fae5;
+  --color-status-warning-bg: #fef3c7;
+  --color-status-danger-bg: #fee2e2;
+
+  --color-focus-ring: #0284c7;
+
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px rgba(15, 42, 70, 0.04), 0 2px 10px rgba(15, 42, 70, 0.05);
+  --shadow-md: 0 2px 6px rgba(15, 42, 70, 0.05), 0 8px 24px rgba(15, 42, 70, 0.08);
+  --shadow-lg: 0 4px 12px rgba(15, 42, 70, 0.06), 0 18px 44px rgba(15, 42, 70, 0.11);
+  --shadow-overlay: 0 24px 64px rgba(15, 42, 70, 0.18);
+}
+
 /* 4px Spacing Grid */
 :root {
   --space-0: 0;
@@ -141,10 +190,10 @@
 
   /* Corner Radius */
   --radius-none: 0;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --radius-pill: 9999px;
 
   /* Motion */
@@ -155,6 +204,7 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-enter: cubic-bezier(0, 0, 0.2, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Z-Index */
   --z-base: 0;
@@ -175,6 +225,7 @@
 .app-shell {
   display: flex;
   flex: 1;
+  min-height: 0;
   overflow: hidden;
   flex-direction: row;
 }
@@ -184,7 +235,7 @@
   flex-shrink: 0;
   background-color: var(--color-bg-surface);
   border-right: 1px solid var(--color-border);
-  padding: var(--space-4) 0;
+  padding: var(--space-3) 0 var(--space-8);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -196,18 +247,31 @@
 /* Density Settings */
 :root, [data-density="comfortable"] {
   --row-h: 48px;
-  --card-pad: 24px;
+  --card-pad: 28px;
   --control-h: 40px;
   --grid-gap: 20px;
   --body-size: 14px;
+  /* 세로 리듬 토큰: 섹션 간격 / 카드 내부 간격 / 본문 상하 패딩 */
+  --section-gap: 28px;
+  --card-gap: 22px;
+  --page-pad-y: 32px;
+  --page-pad-bottom: 56px;
+  --field-min-h: 132px;
+  --block-gap: 14px;
 }
 
 [data-density="compact"] {
   --row-h: 36px;
-  --card-pad: 16px;
+  --card-pad: 18px;
   --control-h: 32px;
   --grid-gap: 12px;
   --body-size: 13px;
+  --section-gap: 16px;
+  --card-gap: 14px;
+  --page-pad-y: 18px;
+  --page-pad-bottom: 32px;
+  --field-min-h: 92px;
+  --block-gap: 10px;
 }
 
 /* --------------------------------------------------------------------------
@@ -224,13 +288,15 @@ html {
   background-color: var(--color-bg-canvas);
   color: var(--color-text-primary);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  min-height: 100vh;
+  /* 앱 셸을 뷰포트에 고정하고 본문만 스크롤 — 사이드바/헤더가 항상 보인다 */
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background-color: var(--color-bg-canvas);
@@ -268,14 +334,14 @@ button, input, select, textarea {
 .display-title {
   font-size: 32px;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
   letter-spacing: -0.4px;
 }
 
 .heading-1 {
   font-size: 24px;
   font-weight: 700;
-  line-height: 1.33;
+  line-height: 1.38;
   letter-spacing: -0.3px;
 }
 
@@ -296,7 +362,7 @@ button, input, select, textarea {
 .body-text {
   font-size: var(--body-size);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.75;
 }
 
 .body-strong {
@@ -463,26 +529,29 @@ button, input, select, textarea {
   flex: 1;
   width: 100%;
   margin: 0;
-  padding: var(--space-6) var(--space-6) var(--space-12);
+  padding: var(--page-pad-y) var(--space-8) var(--page-pad-bottom);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--section-gap);
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 
 .page-section {
   display: none;
-  animation: fadeIn var(--dur-base) var(--ease-enter);
+  animation: fadeIn var(--dur-slow) var(--ease-soft);
 }
 
 .page-section.active {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--section-gap);
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -497,8 +566,14 @@ button, input, select, textarea {
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--card-gap);
   position: relative;
+  transition: box-shadow var(--dur-base) var(--ease-soft),
+              border-color var(--dur-base) var(--ease-soft);
+}
+
+.surface-card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .card-header {
@@ -507,13 +582,13 @@ button, input, select, textarea {
   justify-content: space-between;
   gap: var(--space-4);
   border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--space-3);
+  padding-bottom: var(--space-4);
 }
 
 .card-header-left {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
 }
 
 .card-title {
@@ -627,6 +702,7 @@ button, input, select, textarea {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  min-width: 0;
 }
 
 .form-label {
@@ -648,22 +724,25 @@ button, input, select, textarea {
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   color: var(--color-text-primary);
-  padding: 0 var(--space-3);
+  padding: 0 var(--space-4);
   height: var(--control-h);
   font-size: 14px;
-  transition: border-color var(--dur-fast);
+  width: 100%;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 
 .form-textarea {
   height: auto;
-  min-height: 96px;
-  padding: var(--space-3);
+  min-height: var(--field-min-h);
+  padding: var(--space-3) var(--space-4);
   resize: vertical;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
+.form-input:focus, .form-select:focus, .form-textarea:focus,
+.input-text:focus, .textarea:focus {
   border-color: var(--color-focus-ring);
+  box-shadow: 0 0 0 3px var(--color-bg-selected);
   outline: none;
 }
 
@@ -679,7 +758,7 @@ button, input, select, textarea {
 .quadrant-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-4);
+  gap: var(--grid-gap);
 }
 
 .quadrant-box {
@@ -690,7 +769,14 @@ button, input, select, textarea {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-base) var(--ease-soft),
+              background-color var(--dur-base) var(--ease-soft),
+              transform var(--dur-base) var(--ease-soft);
+}
+
+.quadrant-box:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-2px);
 }
 
 .quadrant-box.active-focus {
@@ -715,25 +801,71 @@ button, input, select, textarea {
 .journey-timeline {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-4);
+  gap: var(--grid-gap);
 }
 
 .journey-step {
   background-color: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: var(--space-5);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
   gap: var(--space-3);
   position: relative;
+  overflow: hidden;
   cursor: pointer;
-  transition: border-color var(--dur-fast), transform var(--dur-fast);
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  transition: border-color var(--dur-base) var(--ease-soft),
+              transform var(--dur-base) var(--ease-soft),
+              box-shadow var(--dur-base) var(--ease-soft);
 }
 
-.journey-step:hover {
+/* 상단 브랜드 액센트 — hover/focus 시 부드럽게 드러난다 */
+.journey-step::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-action), var(--color-fill-brand));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-soft);
+}
+
+.journey-step:hover,
+.journey-step:focus-visible {
   border-color: var(--color-action);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.journey-step:hover::before,
+.journey-step:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.journey-step .step-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-weight: 600;
+}
+
+.journey-step .step-cta::after {
+  content: "\2192";
+  transition: transform var(--dur-base) var(--ease-soft);
+}
+
+.journey-step:hover .step-cta::after,
+.journey-step:focus-visible .step-cta::after {
+  transform: translateX(5px);
 }
 
 .journey-step-num {
@@ -964,9 +1096,10 @@ button, input, select, textarea {
 /* Coach Presence Callout */
 .coach-tip-callout {
   background-color: var(--color-bg-subtle);
-  border-left: 3px solid var(--color-action);
-  padding: var(--space-4);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-action);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -1103,6 +1236,12 @@ button, input, select, textarea {
   body, html {
     background: #FFFFFF !important;
     color: #000000 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .app-shell, .main-wrapper {
+    overflow: visible !important;
+    height: auto !important;
   }
   .surface-card {
     border: 1px solid #CCC !important;
@@ -1153,17 +1292,93 @@ button, input, select, textarea {
 }
 
 .nav-group-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
   text-transform: uppercase;
   color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  margin: var(--space-6) var(--space-4) var(--space-2);
+  padding: 0 var(--space-1) var(--space-2);
+  display: flex;
+  align-items: center;
+  user-select: none;
+  box-shadow: none;
+}
+
+.sidebar-nav > .nav-group-label:first-child {
+  margin-top: var(--space-2);
+}
+
+/* 테마별 색상은 토큰(--color-text-muted / --color-border)이 담당한다 */
+
+[data-density="compact"] .nav-group-label {
+  font-size: 10.5px;
   margin-top: var(--space-4);
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-1) var(--space-1);
+  margin-top: var(--space-3);
 }
 
 .sidebar-nav.collapsed .nav-group-label {
   display: none;
+}
+
+/* Sidebar Subgroup Hierarchy */
+.nav-subgroup-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--color-action);
+  margin: var(--space-2) var(--space-3) 2px var(--space-4);
+  padding: 4px 4px 2px 4px;
+  user-select: none;
+}
+
+.subgroup-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-action);
+  flex-shrink: 0;
+}
+
+.sidebar-nav.collapsed .nav-subgroup-label {
+  display: none;
+}
+
+.sidebar-nav .nav-link.nav-sub-link {
+  padding-left: var(--space-5);
+  font-size: 13.5px;
+}
+
+.sidebar-nav.collapsed .nav-link.nav-sub-link {
+  padding-left: 0;
+}
+
+/* Coaching Tool Sharing Hub */
+.iframe-container {
+  width: 100%;
+  height: calc(100vh - 210px);
+  min-height: 650px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-bg-surface);
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 .sidebar-nav .nav-link {
@@ -1185,14 +1400,18 @@ button, input, select, textarea {
 
 .sidebar-nav .nav-link:hover {
   background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
 }
 
-.sidebar-nav .nav-link.is-active {
+.sidebar-nav .nav-link.is-active,
+.sidebar-nav .nav-link.active {
   background-color: var(--color-bg-selected);
   color: var(--color-action);
+  font-weight: 600;
 }
 
-.sidebar-nav .nav-link.is-active::before {
+.sidebar-nav .nav-link.is-active::before,
+.sidebar-nav .nav-link.active::before {
   content: "";
   position: absolute;
   left: -12px;
@@ -1213,7 +1432,8 @@ button, input, select, textarea {
   padding: 0;
 }
 
-.sidebar-nav.collapsed .nav-link.is-active::before {
+.sidebar-nav.collapsed .nav-link.is-active::before,
+.sidebar-nav.collapsed .nav-link.active::before {
   left: 0;
 }
 
@@ -1248,4 +1468,511 @@ button, input, select, textarea {
   right: 0;
   height: 2px;
   background-color: var(--color-action);
+}
+
+
+/* ==========================================================================
+   10. Overview Hero · 진행 현황 · 인터랙션 보강 (UX Layer)
+   ========================================================================== */
+
+/* --- Overview Hero: 메인 화면 세로 여백과 위계를 담당 --------------------- */
+.overview-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(120% 140% at 100% 0%, var(--color-bg-selected) 0%, transparent 58%),
+    linear-gradient(180deg, var(--color-bg-surface) 0%, var(--color-bg-subtle) 100%);
+  box-shadow: var(--shadow-md);
+  padding: calc(var(--card-pad) + 12px) var(--card-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.overview-hero::after {
+  /* 부드러운 광택 — 딱딱한 플랫 패널 느낌을 완화 */
+  content: "";
+  position: absolute;
+  inset: auto -10% -60% 40%;
+  height: 220px;
+  background: radial-gradient(50% 50% at 50% 50%, var(--color-fill-brand) 0%, transparent 70%);
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--color-action);
+}
+
+.hero-eyebrow .hero-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-action);
+  box-shadow: 0 0 0 4px var(--color-bg-selected);
+}
+
+.hero-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: -0.5px;
+  max-width: 24ch;
+}
+
+.hero-lede {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  max-width: 76ch;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  padding-top: var(--space-1);
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 140px;
+}
+
+.hero-meta-item dt {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.hero-meta-item dd {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+
+/* --- 진행 현황 스트립 ----------------------------------------------------- */
+.progress-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+@media (max-width: 1000px) {
+  .progress-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .progress-strip { grid-template-columns: minmax(0, 1fr); }
+}
+
+.progress-card {
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color var(--dur-base) var(--ease-soft),
+              background-color var(--dur-base) var(--ease-soft),
+              transform var(--dur-base) var(--ease-soft),
+              box-shadow var(--dur-base) var(--ease-soft);
+}
+
+.progress-card:hover,
+.progress-card:focus-visible {
+  border-color: var(--color-action);
+  background-color: var(--color-bg-surface);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.progress-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.progress-card-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.progress-card-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-card-value small {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-left: 2px;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg-hover);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--color-action), var(--color-fill-brand));
+  transition: width var(--dur-slow) var(--ease-soft);
+}
+
+.progress-card-hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* --- 스크롤 등장 (IntersectionObserver와 연동) ---------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur-slow) var(--ease-soft),
+              transform var(--dur-slow) var(--ease-soft);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- 맨 위로 버튼 --------------------------------------------------------- */
+.to-top-btn {
+  position: fixed;
+  right: var(--space-6);
+  bottom: calc(var(--space-6) + 56px);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+  pointer-events: none;
+  z-index: var(--z-sticky);
+  transition: opacity var(--dur-base) var(--ease-soft),
+              transform var(--dur-base) var(--ease-soft),
+              color var(--dur-fast),
+              border-color var(--dur-fast);
+}
+
+.to-top-btn.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.to-top-btn:hover {
+  color: var(--color-action);
+  border-color: var(--color-action);
+}
+
+/* --- 접근성: 모션 축소 선호 시 애니메이션 비활성 ------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .page-section,
+  .toast {
+    animation: none;
+  }
+  .journey-step:hover,
+  .journey-step:focus-visible,
+  .progress-card:hover,
+  .progress-card:focus-visible,
+  .quadrant-box:hover {
+    transform: none;
+  }
+  .main-wrapper {
+    scroll-behavior: auto;
+  }
+}
+
+/* --- 반응형 보정 ---------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 26px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-wrapper {
+    padding: var(--page-pad-y) var(--space-4) var(--page-pad-bottom);
+  }
+  .overview-hero {
+    padding: var(--card-pad);
+  }
+  .hero-title {
+    font-size: 22px;
+  }
+  .to-top-btn {
+    right: var(--space-4);
+    bottom: calc(var(--space-4) + 56px);
+  }
+}
+
+@media print {
+  .to-top-btn,
+  .progress-strip,
+  .hero-actions {
+    display: none !important;
+  }
+  .overview-hero {
+    background: none !important;
+    box-shadow: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   11. 누락 클래스 보강 — HTML에서 쓰이지만 정의가 없어 브라우저 기본값으로
+       떨어지던 요소들 (입력 필드가 좁고 블록 간 여백이 사라지던 원인)
+   ========================================================================== */
+
+/* --- 텍스트 강조 --------------------------------------------------------- */
+.text-action {
+  color: var(--color-action);
+}
+
+/* --- 입력 필드 별칭 (.input-text / .textarea) ---------------------------- */
+.input-text,
+.textarea {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  width: 100%;
+  display: block;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.input-text {
+  height: var(--control-h);
+  padding: 0 var(--space-4);
+}
+
+.textarea {
+  min-height: var(--field-min-h);
+  padding: var(--space-3) var(--space-4);
+  line-height: 1.7;
+  resize: vertical;
+}
+
+.input-text::placeholder,
+.textarea::placeholder,
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* --- 설명 블록 ----------------------------------------------------------- */
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--block-gap);
+  min-width: 0;
+}
+
+.info-block > h4 {
+  color: var(--color-text-primary);
+}
+
+.info-block > p {
+  color: var(--color-text-secondary);
+}
+
+/* --- 질문/체크리스트 ------------------------------------------------------ */
+.action-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  transition: border-color var(--dur-base) var(--ease-soft),
+              box-shadow var(--dur-base) var(--ease-soft);
+}
+
+.action-item:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.action-item::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  margin-top: 9px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-action);
+  opacity: 0.5;
+}
+
+.action-item .body-text {
+  line-height: 1.75;
+}
+
+/* --- 헤더 좌측 묶음 / 역할 세그먼트 --------------------------------------- */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.segment {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.segment-btn {
+  border: none;
+  background: transparent;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--dur-fast), color var(--dur-fast);
+}
+
+.segment-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.segment-btn.active,
+.segment-btn.is-active {
+  background-color: var(--color-action);
+  color: var(--color-text-onbrand);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- 사이드바 회차 번호 뱃지 ---------------------------------------------- */
+.nav-num {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--dur-fast), color var(--dur-fast);
+}
+
+.sidebar-nav .nav-link.is-active .nav-num,
+.sidebar-nav .nav-link.active .nav-num {
+  background-color: var(--color-action);
+  border-color: var(--color-action);
+  color: var(--color-text-onbrand);
+}
+
+/* --- 세션 워크시트 여백 --------------------------------------------------- */
+.session-quick-view,
+.session-deep-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap);
+}
+
+
+/* ==========================================================================
+   12. 그리드 유틸리티 — auto-fit 은 항목 수보다 많은 열을 만들어 오른쪽
+       여백이 비는 문제가 있어, 항목 수에 맞춘 고정 열로 전환한다.
+   ========================================================================== */
+.grid-2,
+.grid-3,
+.grid-4 {
+  display: grid;
+  gap: var(--grid-gap);
+  align-items: start;
+}
+
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* 사이드바(240px)와 카드 패딩을 감안한 분기 — 열 하나가 약 300px 아래로
+   좁아지기 전에 단을 줄인다. */
+@media (max-width: 1560px) {
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1340px) {
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1020px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 { grid-template-columns: minmax(0, 1fr); }
 }

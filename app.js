@@ -16,25 +16,36 @@
     LIFELINE: 'mk_coaching_lifeline',
     VALUES: 'mk_coaching_values',
     LEADERSHIP: 'mk_coaching_leadership',
-    MANDALART: 'mk_coaching_mandalart'
+    MANDALART: 'mk_coaching_mandalart',
+    LIFECOACH_WS1: 'mk_lifecoach_ws1',
+    LIFECOACH_WS2: 'mk_lifecoach_ws2',
+    LIFECOACH_WS3: 'mk_lifecoach_ws3'
   };
 
   // 공식 구글폼 (삼성전자 상생협력 아카데미 미경자 코칭일지)
   const GOOGLE_FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSedf_CYG8CDnr42WDstAE2MdpdN3ReucNn4HbnKSy606QRVCg/viewform';
 
   const DEFAULT_STATE = {
-    theme: 'light',
+    theme: 'gray-skyblue',
     density: 'comfortable',
     roleMode: 'coachee', // 'coachee' | 'coach'
     currentTab: 'overview',
     viewModes: {
       session1: 'quick',
       session2: 'quick',
-      session3: 'quick'
+      session3: 'quick',
+      lifecoach1: 'quick',
+      lifecoach2: 'quick',
+      lifecoach3: 'quick'
     }
   };
 
-  let appState = Object.assign({}, DEFAULT_STATE, loadJson(STORAGE_KEYS.STATE));
+  const savedState = loadJson(STORAGE_KEYS.STATE);
+  let appState = Object.assign({}, DEFAULT_STATE, savedState);
+  if (!savedState || savedState.theme === 'light') {
+    appState.theme = 'gray-skyblue';
+    saveJson(STORAGE_KEYS.STATE, appState);
+  }
 
   // --------------------------------------------------------------------------
   // 2. Utility Helpers
@@ -97,9 +108,16 @@
     document.documentElement.setAttribute('data-theme', theme);
     const btn = document.getElementById('themeToggleBtn');
     if (btn) {
-      btn.innerHTML = theme === 'dark' 
-        ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
-        : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      if (theme === 'gray-skyblue') {
+        btn.title = '테마: 그레이-스카이블루 (클릭 시 다크 모드로 전환)';
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`;
+      } else if (theme === 'dark') {
+        btn.title = '테마: 다크 (클릭 시 라이트 모드로 전환)';
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+      } else {
+        btn.title = '테마: 라이트 (클릭 시 그레이-스카이블루로 전환)';
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      }
     }
     saveJson(STORAGE_KEYS.STATE, appState);
   }
@@ -117,7 +135,11 @@
   function applyRoleMode(role) {
     appState.roleMode = role;
     document.querySelectorAll('.role-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.role === role);
+      const on = btn.dataset.role === role;
+      // 마크업에 .is-active, JS는 .active 를 써서 두 개가 동시에 선택돼 보이던 문제 수정
+      btn.classList.toggle('active', on);
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-pressed', String(on));
     });
 
     // Toggle coach exclusive elements
@@ -141,11 +163,164 @@
     if (targetSection) targetSection.classList.add('active');
 
     document.querySelectorAll('.nav-link').forEach(link => {
-      link.classList.toggle('active', link.dataset.tab === tabId);
+      const on = link.dataset.tab === tabId;
+      // 사이드바는 .is-active, 상단 탭은 .active 를 사용한다 (두 규칙 모두 유지)
+      link.classList.toggle('active', on);
+      link.classList.toggle('is-active', on);
+      link.setAttribute('aria-current', on ? 'page' : 'false');
     });
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollMainToTop();
+    if (targetSection) setupReveal(targetSection);
+    if (tabId === 'overview') renderProgress();
     saveJson(STORAGE_KEYS.STATE, appState);
+  }
+
+  // --------------------------------------------------------------------------
+  // 3-1. Scroll Helpers (실제 스크롤 컨테이너는 .main-wrapper)
+  // --------------------------------------------------------------------------
+  function getScroller() {
+    return document.getElementById('mainContent');
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function scrollMainToTop() {
+    const scroller = getScroller();
+    const behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+    if (scroller) scroller.scrollTo({ top: 0, behavior: behavior });
+    else window.scrollTo({ top: 0, behavior: behavior });
+  }
+
+  // --------------------------------------------------------------------------
+  // 3-2. Scroll Reveal — 섹션 전환 시 카드가 순차적으로 부드럽게 등장
+  // --------------------------------------------------------------------------
+  let revealObserver = null;
+
+  function setupReveal(section) {
+    const targets = section.querySelectorAll('.reveal');
+    if (!targets.length) return;
+
+    if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        });
+      }, { root: getScroller(), rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }
+
+    targets.forEach((el, i) => {
+      el.classList.remove('is-visible');
+      el.style.transitionDelay = (i * 60) + 'ms';
+      revealObserver.observe(el);
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 3-3. 진행 현황 집계 — 브라우저에 실제 저장된 데이터만 계산한다
+  // --------------------------------------------------------------------------
+  const MANDALART_PETALS = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8'];
+
+  function filled(value) {
+    return String(value == null ? '' : value).trim().length > 0;
+  }
+
+  const PROGRESS_SPEC = [
+    {
+      key: 'agreement',
+      tab: 'agreement',
+      total: 7,
+      done: function () {
+        const d = loadJson(STORAGE_KEYS.AGREEMENT);
+        if (!d) return 0;
+        let n = ['coacheeName', 'coacheeCompany', 'coachName', 'goal1', 'goal2', 'goal3']
+          .filter(k => filled(d[k])).length;
+        if (d.isSigned) n += 1;
+        return n;
+      }
+    },
+    {
+      key: 'career',
+      tab: 'session1',
+      total: 4,
+      done: function () {
+        let n = 0;
+        const lifeline = loadJson(STORAGE_KEYS.LIFELINE);
+        if (Array.isArray(lifeline) && lifeline.some(r => r && filled(r.event))) n++;
+        const values = loadJson(STORAGE_KEYS.VALUES);
+        if (Array.isArray(values) && values.length >= 3) n++;
+        if (loadJson(STORAGE_KEYS.LEADERSHIP)) n++;
+        const m = loadJson(STORAGE_KEYS.MANDALART);
+        if (m && filled(m.core) && MANDALART_PETALS.every(k => filled(m[k]))) n++;
+        return n;
+      }
+    },
+    {
+      key: 'life',
+      tab: 'lifecoach1',
+      total: 11,
+      done: function () {
+        const ws1 = loadJson(STORAGE_KEYS.LIFECOACH_WS1) || {};
+        const ws2 = loadJson(STORAGE_KEYS.LIFECOACH_WS2) || {};
+        const ws3 = loadJson(STORAGE_KEYS.LIFECOACH_WS3) || {};
+        return ['topic', 'reason', 'goal'].filter(k => filled(ws1[k])).length
+          + ['mentor', 'future', 'nofail', 'aha'].filter(k => filled(ws2[k])).length
+          + ['identity', 'valueLink', 'actions', 'keywords'].filter(k => filled(ws3[k])).length;
+      }
+    }
+  ];
+
+  function renderProgress() {
+    let doneSum = 0;
+    let totalSum = 0;
+
+    PROGRESS_SPEC.forEach(spec => {
+      const done = Math.min(spec.done(), spec.total);
+      const pct = Math.round((done / spec.total) * 100);
+      doneSum += done;
+      totalSum += spec.total;
+
+      const card = document.querySelector(`[data-progress="${spec.key}"]`);
+      if (!card) return;
+
+      const valueEl = card.querySelector('[data-progress-value]');
+      const barEl = card.querySelector('[data-progress-bar]');
+      const hintEl = card.querySelector('[data-progress-hint]');
+
+      if (valueEl) valueEl.innerHTML = `${pct}<small>%</small>`;
+      if (barEl) barEl.style.width = pct + '%';
+      if (hintEl) {
+        hintEl.textContent = done === 0
+          ? '아직 작성 전 · 눌러서 시작하기'
+          : (done >= spec.total ? '작성 완료' : `${done}/${spec.total} 항목 작성`);
+      }
+      card.setAttribute('aria-label', `${card.querySelector('.progress-card-label')?.textContent || spec.key} 진행률 ${pct}퍼센트, 눌러서 이동`);
+    });
+
+    const overall = totalSum ? Math.round((doneSum / totalSum) * 100) : 0;
+    const badge = document.getElementById('progressOverallBadge');
+    if (badge) {
+      badge.textContent = `전체 ${overall}%`;
+      badge.className = 'badge num ' + (overall >= 100 ? 'badge-success' : overall > 0 ? 'badge-brand' : 'badge-neutral');
+    }
+  }
+
+  function resumeWork() {
+    const next = PROGRESS_SPEC.find(spec => spec.done() < spec.total);
+    if (!next) {
+      showToast('모든 워크시트가 작성되었습니다. 코칭 일지에서 기록을 확인해 보세요.');
+      return;
+    }
+    showTab(next.tab);
   }
 
   // --------------------------------------------------------------------------
@@ -636,6 +811,9 @@ ${d.coachReview || '(내용 없음)'}`;
   // --------------------------------------------------------------------------
   // 11. Global Events & Bootstrap
   // --------------------------------------------------------------------------
+  // 새로고침 시 브라우저가 이전 스크롤 위치를 복원하지 않도록 (항상 상단에서 시작)
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
   document.addEventListener('DOMContentLoaded', () => {
     // Apply Settings
     applyTheme(appState.theme);
@@ -645,7 +823,25 @@ ${d.coachReview || '(내용 없음)'}`;
 
     // Event Listeners for Shell
     document.getElementById('themeToggleBtn')?.addEventListener('click', () => {
-      applyTheme(appState.theme === 'light' ? 'dark' : 'light');
+      let nextTheme = 'light';
+      if (appState.theme === 'light') nextTheme = 'gray-skyblue';
+      else if (appState.theme === 'gray-skyblue') nextTheme = 'dark';
+      else nextTheme = 'light';
+
+      applyTheme(nextTheme);
+      showToast(
+        nextTheme === 'gray-skyblue' ? '그레이-스카이블루 테마로 전환되었습니다' :
+        nextTheme === 'dark' ? '다크 모드로 전환되었습니다' :
+        '라이트 모드로 전환되었습니다'
+      );
+    });
+
+    document.getElementById('btnReloadSharingHub')?.addEventListener('click', () => {
+      const iframe = document.getElementById('sharingHubIframe');
+      if (iframe) {
+        iframe.src = iframe.src;
+        showToast('코칭 툴 나눔터를 새로고침했습니다.');
+      }
     });
 
     document.getElementById('sidebarToggleBtn')?.addEventListener('click', () => {
@@ -661,6 +857,19 @@ ${d.coachReview || '(내용 없음)'}`;
     document.getElementById('densityToggleBtn')?.addEventListener('click', () => {
       applyDensity(appState.density === 'comfortable' ? 'compact' : 'comfortable');
     });
+
+    // 이어서 작성하기 — 미완료 워크시트로 바로 이동
+    document.getElementById('btnResumeWork')?.addEventListener('click', resumeWork);
+
+    // 맨 위로 버튼 — 스크롤 컨테이너 기준
+    const scroller = getScroller();
+    const toTopBtn = document.getElementById('toTopBtn');
+    if (scroller && toTopBtn) {
+      scroller.addEventListener('scroll', () => {
+        toTopBtn.classList.toggle('is-visible', scroller.scrollTop > 320);
+      }, { passive: true });
+      toTopBtn.addEventListener('click', scrollMainToTop);
+    }
 
     document.querySelectorAll('.role-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -681,7 +890,7 @@ ${d.coachReview || '(내용 없음)'}`;
     });
 
     // Session View Mode Toggles
-    ['session1', 'session2', 'session3'].forEach(s => {
+    ['session1', 'session2', 'session3', 'lifecoach1', 'lifecoach2', 'lifecoach3'].forEach(s => {
       document.querySelectorAll(`[data-view-btn="${s}"]`).forEach(btn => {
         btn.addEventListener('click', () => {
           setSessionViewMode(s, btn.dataset.mode);
@@ -697,6 +906,69 @@ ${d.coachReview || '(내용 없음)'}`;
       renderLifeLine();
     });
 
+    // Life Coaching Worksheets Logic
+    function initLifeWorksheets() {
+      // 1회차 워크시트
+      const ws1Data = loadJson(STORAGE_KEYS.LIFECOACH_WS1) || {};
+      const t1 = document.getElementById('life1-topic');
+      const r1 = document.getElementById('life1-reason');
+      const g1 = document.getElementById('life1-goal');
+      if (t1 && ws1Data.topic) t1.value = ws1Data.topic;
+      if (r1 && ws1Data.reason) r1.value = ws1Data.reason;
+      if (g1 && ws1Data.goal) g1.value = ws1Data.goal;
+
+      document.getElementById('btnSaveLifeWorksheet1')?.addEventListener('click', () => {
+        saveJson(STORAGE_KEYS.LIFECOACH_WS1, {
+          topic: t1?.value || '',
+          reason: r1?.value || '',
+          goal: g1?.value || ''
+        });
+        showToast('1회차 라이프 코칭 합의서가 저장되었습니다.');
+      });
+
+      // 2회차 워크시트
+      const ws2Data = loadJson(STORAGE_KEYS.LIFECOACH_WS2) || {};
+      const m2 = document.getElementById('life2-mentor');
+      const f2 = document.getElementById('life2-future');
+      const n2 = document.getElementById('life2-nofail');
+      const a2 = document.getElementById('life2-aha');
+      if (m2 && ws2Data.mentor) m2.value = ws2Data.mentor;
+      if (f2 && ws2Data.future) f2.value = ws2Data.future;
+      if (n2 && ws2Data.nofail) n2.value = ws2Data.nofail;
+      if (a2 && ws2Data.aha) a2.value = ws2Data.aha;
+
+      document.getElementById('btnSaveLifeWorksheet2')?.addEventListener('click', () => {
+        saveJson(STORAGE_KEYS.LIFECOACH_WS2, {
+          mentor: m2?.value || '',
+          future: f2?.value || '',
+          nofail: n2?.value || '',
+          aha: a2?.value || ''
+        });
+        showToast('2회차 관점 전환 성찰 카드가 저장되었습니다.');
+      });
+
+      // 3회차 워크시트
+      const ws3Data = loadJson(STORAGE_KEYS.LIFECOACH_WS3) || {};
+      const id3 = document.getElementById('life3-identity-name');
+      const v3 = document.getElementById('life3-value-link');
+      const act3 = document.getElementById('life3-actions');
+      const kw3 = document.getElementById('life3-keywords');
+      if (id3 && ws3Data.identity) id3.value = ws3Data.identity;
+      if (v3 && ws3Data.valueLink) v3.value = ws3Data.valueLink;
+      if (act3 && ws3Data.actions) act3.value = ws3Data.actions;
+      if (kw3 && ws3Data.keywords) kw3.value = ws3Data.keywords;
+
+      document.getElementById('btnSaveLifeWorksheet3')?.addEventListener('click', () => {
+        saveJson(STORAGE_KEYS.LIFECOACH_WS3, {
+          identity: id3?.value || '',
+          valueLink: v3?.value || '',
+          actions: act3?.value || '',
+          keywords: kw3?.value || ''
+        });
+        showToast('3회차 정체성 통합 및 플래너가 저장되었습니다.');
+      });
+    }
+
     // Initialize modules
     initValuesSelector();
     renderLifeLine();
@@ -706,5 +978,10 @@ ${d.coachReview || '(내용 없음)'}`;
     initLogEditor();
     selectLogSession(1);
     initToolkitAccordion();
+    initLifeWorksheets();
+    renderProgress();
+
+    const activeSection = document.getElementById(`section-${appState.currentTab}`);
+    if (activeSection) setupReveal(activeSection);
   });
 })();
