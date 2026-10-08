@@ -2,26 +2,21 @@
 <html lang="ko" data-theme="gray-skyblue" data-density="comfortable">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>미래경영자 코칭 포털 | 삼성전자 상생협력 아카데미</title>
   <meta name="description" content="미래경영자(경영자 후보, 가업승계 2세)의 자기 성찰과 리더십 자립을 지원하는 3회차 맞춤형 코칭 프로그램 포털">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 
   <a class="skip-link" href="#mainContent">본문 바로가기</a>
-
-  <!-- 768px 미만 안내 (DESIGN.md 5.1: xs 미지원 → 경고) -->
-  <div class="viewport-warning" role="note">
-    이 포털은 태블릿(768px) 이상 화면에 최적화되어 있습니다. 일부 워크시트는 가로 화면에서 이용해 주세요.
-  </div>
 
   <!-- ======================================================================
        AppHeader (DESIGN.md 6.5 — 56px sticky)
        ====================================================================== -->
   <header class="app-header">
     <div class="header-left">
-      <button type="button" class="icon-btn" id="sidebarToggleBtn" aria-label="사이드바 접기/펼치기" aria-expanded="true">
+      <button type="button" class="icon-btn" id="sidebarToggleBtn" aria-label="메뉴 열기/닫기" aria-expanded="true" aria-controls="sidebarNav">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <button type="button" class="header-brand" data-jump-tab="overview" aria-label="프로그램 개요로 이동">
@@ -49,6 +44,8 @@
       </button>
     </div>
   </header>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
 
   <div class="app-shell">
     <!-- ====================================================================
@@ -443,9 +440,9 @@
         </div>
         <p class="caption-text">각 영역의 슬라이더를 조정하여 현재 나의 리더십 역량 균형 상태를 시각화해 보세요.</p>
         
-        <div style="display: grid; grid-template-columns: 320px 1fr; gap: var(--space-6); align-items: center;">
-          <div style="display: flex; justify-content: center;">
-            <svg id="wheelChartSvg" width="300" height="300" viewBox="0 0 300 300" role="img" aria-label="리더십 8대 역량 자가진단 방사형 차트"></svg>
+        <div class="wheel-layout">
+          <div class="wheel-chart-box">
+            <svg id="wheelChartSvg" viewBox="0 0 300 300" role="img" aria-label="리더십 8대 역량 자가진단 방사형 차트"></svg>
           </div>
           <div class="wheel-sliders-grid" id="wheelSlidersContainer"></div>
         </div>
@@ -960,7 +957,7 @@
             <span class="label-text">OFFICIAL AGREEMENT</span>
             <h2 class="card-title">[양식] 미래경영자 심화과정 코칭 합의서</h2>
           </div>
-          <div style="display: flex; gap: var(--space-2);">
+          <div class="toolbar-row">
             <button type="button" class="btn btn-secondary btn-sm" id="btnCopyAgreement">합의서 복사</button>
             <button type="button" class="btn btn-primary btn-sm" id="btnPrintAgreement">인쇄 / PDF 저장</button>
           </div>
@@ -1028,7 +1025,7 @@
             <span class="label-text text-action">COACH MODE ONLY</span>
             <h2 class="card-title">인앱 코칭 일지 작성기 (Coach Log Editor)</h2>
           </div>
-          <div style="display: flex; align-items: center; gap: var(--space-2);">
+          <div class="toolbar-row">
             <span class="badge badge-neutral" id="logSaveStatusBadge">작성 대기</span>
             <button type="button" class="btn btn-secondary btn-sm" id="btnCopyLog">일지 전체 복사</button>
             <button type="button" class="btn btn-secondary btn-sm" id="btnExportJson">JSON 백업</button>
@@ -1100,7 +1097,7 @@
             <span class="label-text text-action">COACH TOOL SHARING HUB</span>
             <h2 class="card-title">코칭 툴 나눔터 (CT-Sharing Hub)</h2>
           </div>
-          <div style="display: flex; gap: var(--space-2); align-items: center;">
+          <div class="toolbar-row">
             <button type="button" class="btn btn-secondary btn-sm" id="btnReloadSharingHub" title="나눔터 다시 불러오기">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
               새로고침
@@ -1142,15 +1139,15 @@
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
-                <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 4px;">
+                <li class="qa-row has-rule">
                   <span>“부모님이나 선대 경영자의 기대가 아닌, 당신 자신이 진짜 갈망하는 경영자의 모습은 어떤 모습인가요?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="부모님이나 선대 경영자의 기대가 아닌, 당신 자신이 진짜 갈망하는 경영자의 모습은 어떤 모습인가요?">복사</button>
                 </li>
-                <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 4px;">
+                <li class="qa-row has-rule">
                   <span>“과거 가장 큰 성취를 이뤘을 때, 당신 안에서 빛났던 가장 본질적인 강점은 무엇이었나요?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="과거 가장 큰 성취를 이뤘을 때, 당신 안에서 빛났던 가장 본질적인 강점은 무엇이었나요?">복사</button>
                 </li>
-                <li style="display: flex; justify-content: space-between; align-items: center;">
+                <li class="qa-row">
                   <span>“10년 뒤 후배 경영자가 당신을 바라본다면, 어떤 한 단어로 기억되길 원하시나요?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="10년 뒤 후배 경영자가 당신을 바라본다면, 어떤 한 단어로 기억되길 원하시나요?">복사</button>
                 </li>
@@ -1165,11 +1162,11 @@
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
-                <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 4px;">
+                <li class="qa-row has-rule">
                   <span>“선배 임원들이 변화를 두려워하는 이면에 숨겨진 진짜 불안은 무엇일까요?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="선배 임원들이 변화를 두려워하는 이면에 숨겨진 진짜 불안은 무엇일까요?">복사</button>
                 </li>
-                <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 4px;">
+                <li class="qa-row has-rule">
                   <span>“옳고 그름을 따지기보다, 양쪽 모두가 회사의 성장을 바란다는 전제에서 대화한다면 첫 마디를 어떻게 꺼내시겠습니까?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="옳고 그름을 따지기보다, 양쪽 모두가 회사의 성장을 바란다는 전제에서 대화한다면 첫 마디를 어떻게 꺼내시겠습니까?">복사</button>
                 </li>
@@ -1184,11 +1181,11 @@
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
-                <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 4px;">
+                <li class="qa-row has-rule">
                   <span>“‘내가 모든 것을 다 알고 결정해야 한다’는 생각이 당신의 에너지를 어떻게 소진시키고 있나요?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="‘내가 모든 것을 다 알고 결정해야 한다’는 생각이 당신의 에너지를 어떻게 소진시키고 있나요?">복사</button>
                 </li>
-                <li style="display: flex; justify-content: space-between; align-items: center;">
+                <li class="qa-row">
                   <span>“만약 이번 결정에서 실패해도 당신의 존재 가치가 손상되지 않는다면, 무엇을 시도해 보시겠습니까?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="만약 이번 결정에서 실패해도 당신의 존재 가치가 손상되지 않는다면, 무엇을 시도해 보시겠습니까?">복사</button>
                 </li>
@@ -1203,11 +1200,11 @@
             </button>
             <div class="qa-content">
               <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2);">
-                <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 4px;">
+                <li class="qa-row has-rule">
                   <span>“이번 한 주 동안 오직 나 자신만을 위해 남겨둔 성찰의 시간은 몇 분이었습니까?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="이번 한 주 동안 오직 나 자신만을 위해 남겨둔 성찰의 시간은 몇 분이었습니까?">복사</button>
                 </li>
-                <li style="display: flex; justify-content: space-between; align-items: center;">
+                <li class="qa-row">
                   <span>“극심한 스트레스 상황에서 내 호흡을 가다듬고 제자리로 돌아오게 만드는 나만의 안전지대는 어디인가요?”</span>
                   <button type="button" class="btn btn-ghost btn-sm btn-copy-question" data-question-text="극심한 스트레스 상황에서 내 호흡을 가다듬고 제자리로 돌아오게 만드는 나만의 안전지대는 어디인가요?">복사</button>
                 </li>
@@ -1323,6 +1320,6 @@
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- Client Application Script -->
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=14"></script>
 </body>
 </html>

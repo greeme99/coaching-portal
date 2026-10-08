@@ -231,7 +231,7 @@
 }
 
 .sidebar-nav {
-  width: 240px;
+  width: var(--sidebar-w);
   flex-shrink: 0;
   background-color: var(--color-bg-surface);
   border-right: 1px solid var(--color-border);
@@ -247,30 +247,34 @@
 /* Density Settings */
 :root, [data-density="comfortable"] {
   --row-h: 48px;
-  --card-pad: 28px;
+  --card-pad: clamp(16px, 1.9vw, 28px);
   --control-h: 40px;
-  --grid-gap: 20px;
-  --body-size: 14px;
-  /* 세로 리듬 토큰: 섹션 간격 / 카드 내부 간격 / 본문 상하 패딩 */
-  --section-gap: 28px;
-  --card-gap: 22px;
-  --page-pad-y: 32px;
-  --page-pad-bottom: 56px;
-  --field-min-h: 132px;
-  --block-gap: 14px;
+  --grid-gap: clamp(12px, 1.4vw, 20px);
+  --body-size: clamp(13px, 0.95vw, 14px);
+  /* 세로 리듬 토큰 — 뷰포트 폭에 따라 유동 (clamp: 모바일 최소값 ~ 데스크톱 최대값) */
+  --section-gap: clamp(16px, 1.9vw, 28px);
+  --card-gap: clamp(14px, 1.5vw, 22px);
+  --page-pad-x: clamp(14px, 2.2vw, 32px);
+  --page-pad-y: clamp(16px, 2.2vw, 32px);
+  --page-pad-bottom: clamp(40px, 4vw, 56px);
+  --field-min-h: clamp(96px, 9vw, 132px);
+  --block-gap: clamp(10px, 1vw, 14px);
+  --sidebar-w: 240px;
+  --header-h: 56px;
 }
 
 [data-density="compact"] {
   --row-h: 36px;
-  --card-pad: 18px;
+  --card-pad: clamp(14px, 1.3vw, 18px);
   --control-h: 32px;
-  --grid-gap: 12px;
+  --grid-gap: clamp(10px, 1vw, 12px);
   --body-size: 13px;
-  --section-gap: 16px;
-  --card-gap: 14px;
-  --page-pad-y: 18px;
-  --page-pad-bottom: 32px;
-  --field-min-h: 92px;
+  --section-gap: clamp(12px, 1.2vw, 16px);
+  --card-gap: clamp(10px, 1vw, 14px);
+  --page-pad-x: clamp(12px, 1.6vw, 24px);
+  --page-pad-y: clamp(12px, 1.4vw, 18px);
+  --page-pad-bottom: clamp(28px, 3vw, 32px);
+  --field-min-h: clamp(84px, 7vw, 92px);
   --block-gap: 10px;
 }
 
@@ -296,6 +300,7 @@ html {
 body {
   /* 앱 셸을 뷰포트에 고정하고 본문만 스크롤 — 사이드바/헤더가 항상 보인다 */
   height: 100vh;
+  height: 100dvh; /* 모바일 브라우저 주소창 높이 변화 대응 */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -390,7 +395,7 @@ button, input, select, textarea {
    4. App Header Layout (56px Sticky)
    -------------------------------------------------------------------------- */
 .app-header {
-  height: 56px;
+  height: var(--header-h);
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
@@ -529,7 +534,7 @@ button, input, select, textarea {
   flex: 1;
   width: 100%;
   margin: 0;
-  padding: var(--page-pad-y) var(--space-8) var(--page-pad-bottom);
+  padding: var(--page-pad-y) var(--page-pad-x) var(--page-pad-bottom);
   display: flex;
   flex-direction: column;
   gap: var(--section-gap);
@@ -757,7 +762,7 @@ button, input, select, textarea {
 /* Matrix 4-Quadrant (Coaching vs Consulting/Mentoring/Counseling) */
 .quadrant-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--grid-gap);
 }
 
@@ -800,7 +805,7 @@ button, input, select, textarea {
 /* 3-Session Journey Timeline */
 .journey-timeline {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--grid-gap);
 }
 
@@ -927,7 +932,7 @@ button, input, select, textarea {
 /* Mandalart 9-Grid (Session 3) */
 .mandalart-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-3);
   background-color: var(--color-bg-subtle);
   padding: var(--space-4);
@@ -971,7 +976,7 @@ button, input, select, textarea {
 /* Leadership Wheel Sliders (Session 2) */
 .wheel-sliders-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
 }
 
@@ -1007,7 +1012,7 @@ button, input, select, textarea {
 
 .timeline-row {
   display: grid;
-  grid-template-columns: 140px 1fr 1fr auto;
+  grid-template-columns: minmax(100px, 140px) minmax(0, 1fr) minmax(0, 1fr) auto;
   gap: var(--space-3);
   align-items: center;
   background-color: var(--color-bg-subtle);
@@ -1050,7 +1055,7 @@ button, input, select, textarea {
 /* Coach Log Layout (Coach Mode Exclusive) */
 .log-layout-grid {
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
   gap: var(--space-6);
 }
 
@@ -1201,13 +1206,13 @@ button, input, select, textarea {
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
   .journey-timeline {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .log-layout-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .wheel-sliders-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1218,14 +1223,11 @@ button, input, select, textarea {
   .brand-name {
     font-size: 13px;
   }
-  .main-wrapper {
-    padding: var(--space-4) var(--space-3) var(--space-8);
-  }
   .quadrant-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .timeline-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1266,22 +1268,6 @@ button, input, select, textarea {
 
 .skip-link:focus {
   top: 0;
-}
-
-.viewport-warning {
-  display: none;
-  background-color: var(--color-status-warning-bg);
-  color: var(--color-status-warning);
-  padding: var(--space-3);
-  text-align: center;
-  font-weight: 600;
-  border-bottom: 1px solid var(--color-border);
-}
-
-@media (max-width: 767px) {
-  .viewport-warning {
-    display: block;
-  }
 }
 
 .app-shell-removed {}
@@ -1364,8 +1350,8 @@ button, input, select, textarea {
 /* Coaching Tool Sharing Hub */
 .iframe-container {
   width: 100%;
-  height: calc(100vh - 210px);
-  min-height: 650px;
+  height: clamp(420px, calc(100dvh - 230px), 900px);
+  min-height: 0;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -1485,7 +1471,7 @@ button, input, select, textarea {
     radial-gradient(120% 140% at 100% 0%, var(--color-bg-selected) 0%, transparent 58%),
     linear-gradient(180deg, var(--color-bg-surface) 0%, var(--color-bg-subtle) 100%);
   box-shadow: var(--shadow-md);
-  padding: calc(var(--card-pad) + 12px) var(--card-pad);
+  padding: calc(var(--card-pad) + clamp(4px, 1vw, 12px)) var(--card-pad);
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
@@ -1522,7 +1508,7 @@ button, input, select, textarea {
 }
 
 .hero-title {
-  font-size: 30px;
+  font-size: clamp(21px, 2.4vw, 30px);
   font-weight: 700;
   line-height: 1.32;
   letter-spacing: -0.5px;
@@ -1530,7 +1516,7 @@ button, input, select, textarea {
 }
 
 .hero-lede {
-  font-size: 18px;
+  font-size: clamp(14px, 1.3vw, 18px);
   line-height: 1.8;
   color: var(--color-text-secondary);
   /* 줄바꿈을 마크업의 <br> 로 지정하므로 폭 제한을 두지 않는다 */
@@ -1744,9 +1730,6 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
-  .main-wrapper {
-    padding: var(--page-pad-y) var(--space-4) var(--page-pad-bottom);
-  }
   .overview-hero {
     padding: var(--card-pad);
   }
@@ -2137,4 +2120,472 @@ button, input, select, textarea {
 
 @media print {
   .cohort-picker { display: none !important; }
+}
+
+
+/* ==========================================================================
+   14. Adaptive Layout — 기기/화면 폭에 따른 렌더링
+       데스크톱(>1024) : 고정 사이드바
+       태블릿/모바일(<=1024) : 사이드바 오프캔버스 드로어
+       폰(<=640) / 폴더블(<=400) : 헤더·그리드·타이포 추가 축약
+   ========================================================================== */
+
+/* --- 드로어 배경막 (데스크톱에서는 존재하지 않는 것처럼 동작) ------------- */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  background-color: rgba(15, 23, 42, 0.45);
+  z-index: calc(var(--z-drawer) - 1);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-soft);
+}
+
+.sidebar-backdrop.is-open {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   태블릿 이하 — 사이드바를 오프캔버스 드로어로
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .sidebar-backdrop {
+    display: block;
+    pointer-events: none;
+  }
+  .sidebar-backdrop.is-open {
+    pointer-events: auto;
+  }
+
+  .sidebar-nav {
+    position: fixed;
+    top: var(--header-h);
+    bottom: 0;
+    left: 0;
+    width: min(288px, 84vw);
+    z-index: var(--z-drawer);
+    transform: translateX(-100%);
+    transition: transform var(--dur-base) var(--ease-soft);
+    box-shadow: var(--shadow-overlay);
+    border-right: 1px solid var(--color-border);
+  }
+
+  .sidebar-nav.is-open {
+    transform: none;
+  }
+
+  /* 데스크톱 전용 '아이콘 레일' 축약 상태는 드로어에서 무효화한다 */
+  .sidebar-nav.collapsed {
+    width: min(288px, 84vw);
+  }
+  .sidebar-nav.collapsed .nav-link {
+    justify-content: flex-start;
+    padding-left: var(--space-3);
+  }
+  .sidebar-nav.collapsed .nav-link .nav-text,
+  .sidebar-nav.collapsed .nav-group-label,
+  .sidebar-nav.collapsed .nav-subgroup-label {
+    display: flex;
+  }
+  .sidebar-nav.collapsed .nav-link .nav-text {
+    display: inline;
+  }
+
+  /* 본문이 전체 폭을 쓴다 */
+  .app-shell {
+    display: block;
+    position: relative;
+  }
+  .main-wrapper {
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   작은 노트북 — 사이드바 소폭 축소
+   ========================================================================== */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  :root { --sidebar-w: 212px; }
+}
+
+/* ==========================================================================
+   헤더 축약
+   ========================================================================== */
+@media (max-width: 920px) {
+  /* 저장 시각은 본문에서도 확인 가능하므로 헤더에서 숨긴다 */
+  #lastSavedStamp { display: none; }
+}
+
+@media (max-width: 760px) {
+  .app-header {
+    padding: 0 var(--space-3);
+    gap: var(--space-2);
+  }
+  .brand-name {
+    display: none;
+  }
+  .header-left,
+  .header-actions {
+    gap: var(--space-2);
+  }
+  .segment-btn {
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  :root { --header-h: 52px; }
+  .header-brand .badge {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+  .cohort-select {
+    font-size: 11px;
+    padding-right: var(--space-5);
+  }
+  .segment-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
+
+/* ==========================================================================
+   콘텐츠 블록 — 폭에 따른 단 축소
+   ========================================================================== */
+@media (max-width: 900px) {
+  .timeline-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .card-header .tabs {
+    width: 100%;
+  }
+  .admin-add-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .admin-add-form .form-group {
+    max-width: none;
+  }
+}
+
+@media (max-width: 860px) {
+  /* 관리자 표는 가로 스크롤로 보존 (열 병합 시 의미가 흐려짐) */
+  .admin-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-table {
+    min-width: 520px;
+  }
+}
+
+@media (max-width: 720px) {
+  .quadrant-grid,
+  .wheel-sliders-grid,
+  .log-layout-grid,
+  .journey-timeline {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero-meta {
+    gap: var(--space-3);
+  }
+  .hero-meta-item {
+    min-width: 0;
+    flex: 1 1 45%;
+  }
+  .hero-actions .btn {
+    flex: 1 1 auto;
+  }
+  .to-top-btn {
+    width: 40px;
+    height: 40px;
+    right: var(--space-3);
+    bottom: calc(var(--space-3) + 52px);
+  }
+  .toast-container {
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
+  }
+  .toast {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   폰 — 만다라트/칩 등 조밀한 위젯 축약
+   ========================================================================== */
+@media (max-width: 560px) {
+  .mandalart-container {
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+  .mandalart-cell {
+    padding: var(--space-2);
+  }
+  .mandalart-cell label {
+    font-size: 10px;
+  }
+  .mandalart-cell textarea {
+    font-size: 11px;
+    min-height: 56px;
+  }
+  .qa-trigger {
+    font-size: 13px;
+  }
+  .journey-step {
+    padding: var(--space-5);
+  }
+}
+
+/* ==========================================================================
+   폴더블 외부화면 등 초협폭 (280~400px)
+   ========================================================================== */
+@media (max-width: 400px) {
+  .hero-meta-item {
+    flex: 1 1 100%;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+  .cohort-picker {
+    padding-left: 2px;
+  }
+  .mandalart-cell textarea {
+    font-size: 10px;
+    min-height: 48px;
+  }
+  .segment-btn {
+    padding: 5px 6px;
+  }
+  .admin-table .col-actions .btn {
+    margin: 2px 0 0;
+    display: block;
+    width: 100%;
+  }
+}
+
+/* 어떤 폭에서도 가로 스크롤이 생기지 않도록 하는 안전장치 */
+.app-header,
+.main-wrapper,
+.page-section,
+.surface-card,
+.overview-hero {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.surface-card,
+.overview-hero,
+.info-block,
+.action-item,
+.journey-step {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   가로로 누운 폰 — 세로 여백 축소
+   ========================================================================== */
+@media (max-height: 520px) and (orientation: landscape) {
+  :root {
+    --page-pad-y: 12px;
+    --page-pad-bottom: 24px;
+    --section-gap: 14px;
+    --header-h: 48px;
+  }
+  .overview-hero {
+    padding: var(--space-4);
+  }
+}
+
+/* ==========================================================================
+   터치 기기 — 최소 44px 타깃 확보 & hover 연출 제거
+   ========================================================================== */
+@media (hover: none) and (pointer: coarse) {
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .sidebar-nav .nav-link {
+    height: 46px;
+  }
+  .segment-btn,
+  .cohort-select {
+    min-height: 34px;
+  }
+  .btn {
+    min-height: 40px;
+  }
+  .tab {
+    min-height: 42px;
+  }
+  .journey-step:hover,
+  .progress-card:hover,
+  .quadrant-box:hover,
+  .surface-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .journey-step:hover::before {
+    transform: scaleX(0);
+  }
+  /* 터치에서는 활성 상태를 눌림으로 표현 */
+  .journey-step:active,
+  .progress-card:active {
+    transform: scale(0.99);
+  }
+}
+
+@media print {
+  .sidebar-backdrop { display: none !important; }
+}
+
+
+/* ==========================================================================
+   15. 리더십 수레바퀴 — 유동 차트 레이아웃
+       기존 인라인 `320px 1fr` 고정 트랙이 좁은 화면에서 가로 넘침을 만들었다.
+   ========================================================================== */
+.wheel-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.wheel-chart-box {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+#wheelChartSvg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.wheel-item {
+  min-width: 0;
+}
+
+.wheel-item-header {
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.wheel-item-header > span:first-child {
+  min-width: 0;
+  word-break: keep-all;
+}
+
+.score-display {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: var(--color-action);
+  font-variant-numeric: tabular-nums;
+}
+
+.wheel-slider {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .wheel-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+}
+
+
+/* ==========================================================================
+   16. 가로 툴바 / 질문 행 — 좁은 화면에서 줄바꿈
+   ========================================================================== */
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.qa-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.qa-row.has-rule {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-2);
+}
+
+.qa-row > span {
+  min-width: 0;
+  word-break: keep-all;
+}
+
+.qa-row .btn {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 600px) {
+  .qa-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .toolbar-row .btn {
+    flex: 1 1 auto;
+  }
+}
+
+
+/* ==========================================================================
+   17. 헤더 — 좁은 폭에서의 요소 우선순위
+       (역할 버튼이 글자 단위로 줄바꿈되던 문제 수정)
+   ========================================================================== */
+.segment-btn,
+.cohort-select,
+.cohort-picker-label,
+.badge {
+  white-space: nowrap;
+}
+
+.header-left {
+  min-width: 0;
+}
+
+.header-actions {
+  flex-shrink: 0;
+}
+
+.header-brand {
+  min-width: 0;
+}
+
+/* 폭이 줄면 중요도가 낮은 것부터 접는다: 브랜드 배지 -> 밀도 토글 */
+@media (max-width: 560px) {
+  .header-brand .badge {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  #densityToggleBtn {
+    display: none;
+  }
+  .app-header {
+    padding: 0 var(--space-2);
+  }
 }

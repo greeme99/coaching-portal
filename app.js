@@ -586,6 +586,80 @@
     });
   }
 
+  // --------------------------------------------------------------------------
+  // 3-5. 반응형 내비게이션 — 데스크톱은 고정 사이드바, 태블릿 이하는 드로어
+  //      CSS 의 @media (max-width: 1024px) 와 같은 분기점을 사용한다.
+  // --------------------------------------------------------------------------
+  const DRAWER_MQ = window.matchMedia('(max-width: 1024px)');
+
+  function isDrawerMode() {
+    return DRAWER_MQ.matches;
+  }
+
+  function setDrawer(open) {
+    const nav = document.getElementById('sidebarNav');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const btn = document.getElementById('sidebarToggleBtn');
+    if (!nav) return;
+    nav.classList.toggle('is-open', open);
+    backdrop?.classList.toggle('is-open', open);
+    backdrop?.setAttribute('aria-hidden', String(!open));
+    btn?.setAttribute('aria-expanded', String(open));
+    // 드로어가 열린 동안 뒤 본문이 스크롤되지 않도록
+    document.getElementById('mainContent')?.toggleAttribute('inert', open);
+    if (open) nav.querySelector('.nav-link')?.focus({ preventScroll: true });
+  }
+
+  function toggleSidebar() {
+    const nav = document.getElementById('sidebarNav');
+    if (!nav) return;
+    if (isDrawerMode()) {
+      setDrawer(!nav.classList.contains('is-open'));
+      return;
+    }
+    // 데스크톱: 아이콘 레일로 접기/펼치기
+    nav.classList.toggle('collapsed');
+    document.getElementById('sidebarToggleBtn')
+      ?.setAttribute('aria-expanded', String(!nav.classList.contains('collapsed')));
+  }
+
+  function syncNavToViewport() {
+    const nav = document.getElementById('sidebarNav');
+    const btn = document.getElementById('sidebarToggleBtn');
+    if (!nav) return;
+    if (isDrawerMode()) {
+      // 드로어로 전환될 때는 항상 닫힌 상태에서 시작
+      setDrawer(false);
+    } else {
+      // 데스크톱 복귀: 드로어 흔적을 지우고 레일 상태만 남긴다
+      nav.classList.remove('is-open');
+      document.getElementById('sidebarBackdrop')?.classList.remove('is-open');
+      document.getElementById('mainContent')?.removeAttribute('inert');
+      btn?.setAttribute('aria-expanded', String(!nav.classList.contains('collapsed')));
+    }
+  }
+
+  function initResponsiveNav() {
+    document.getElementById('sidebarToggleBtn')?.addEventListener('click', toggleSidebar);
+    document.getElementById('sidebarBackdrop')?.addEventListener('click', () => setDrawer(false));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && isDrawerMode()) setDrawer(false);
+    });
+
+    // 메뉴를 고르면 드로어는 닫는다
+    document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (isDrawerMode()) setDrawer(false);
+      });
+    });
+
+    if (DRAWER_MQ.addEventListener) DRAWER_MQ.addEventListener('change', syncNavToViewport);
+    else DRAWER_MQ.addListener(syncNavToViewport); // 구형 Safari
+
+    syncNavToViewport();
+  }
+
   function resumeWork() {
     const next = PROGRESS_SPEC.find(spec => spec.done() < spec.total);
     if (!next) {
@@ -1091,6 +1165,7 @@ ${d.coachReview || '(내용 없음)'}`;
     applyTheme(appState.theme);
     applyDensity(appState.density);
     applyRoleMode(appState.roleMode, false);
+    initResponsiveNav();
     initCohortUI();
     showTab(appState.currentTab);
     flushQueuedToast();
@@ -1115,16 +1190,6 @@ ${d.coachReview || '(내용 없음)'}`;
       if (iframe) {
         iframe.src = iframe.src;
         showToast('코칭 툴 나눔터를 새로고침했습니다.');
-      }
-    });
-
-    document.getElementById('sidebarToggleBtn')?.addEventListener('click', () => {
-      const nav = document.getElementById('sidebarNav');
-      if (nav) {
-        nav.classList.toggle('collapsed');
-        const isCollapsed = nav.classList.contains('collapsed');
-        const btn = document.getElementById('sidebarToggleBtn');
-        if (btn) btn.setAttribute('aria-expanded', !isCollapsed);
       }
     });
 
