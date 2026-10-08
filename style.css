@@ -1530,10 +1530,13 @@ button, input, select, textarea {
 }
 
 .hero-lede {
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.8;
   color: var(--color-text-secondary);
-  max-width: 76ch;
+  /* 줄바꿈을 마크업의 <br> 로 지정하므로 폭 제한을 두지 않는다 */
+  max-width: none;
+  /* 한글 단어가 '코/칭' 처럼 중간에서 끊기지 않도록 */
+  word-break: keep-all;
 }
 
 .hero-meta {
